@@ -1,0 +1,111 @@
+/* Stat Card Component - Modern & Responsive */
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 4px solid transparent;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card-blue {
+  border-left-color: #4299e1;
+}
+
+.stat-card-orange {
+  border-left-color: #ed8936;
+}
+
+.stat-card-purple {
+  border-left-color: #9f7aea;
+}
+
+.stat-card-green {
+  border-left-color: #48bb78;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.stat-card-blue .stat-icon {
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.stat-card-orange .stat-icon {
+  background: rgba(237, 137, 54, 0.1);
+}
+
+.stat-card-purple .stat-icon {
+  background: rgba(159, 122, 234, 0.1);
+}
+
+.stat-card-green .stat-icon {
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.stat-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+}
+
+.stat-subtitle {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-title {
+    font-size: 0.9rem;
+  }
+
+  .stat-subtitle {
+    font-size: 0.8rem;
+  }
+}

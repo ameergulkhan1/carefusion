@@ -1,0 +1,29 @@
+.test-results {
+  padding: var(--spacing-lg);
+}
+
+.test-results h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary-color);
+}
+
+.result-card {
+  margin-bottom: var(--spacing-md);
+}
+
+.status-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.status-normal {
+  background: var(--success-color);
+  color: white;
+}
+
+.status-abnormal {
+  background: var(--danger-color);
+  color: white;
+}

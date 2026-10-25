@@ -1,0 +1,30 @@
+.chat-consultation {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: var(--border-radius);
+}
+
+.chat-messages {
+  flex: 1;
+  padding: var(--spacing-md);
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+}
+
+.message-doctor {
+  background: var(--light-color);
+  align-self: flex-start;
+}
+
+.message-patient {
+  background: var(--primary-color);
+  color: white;
+  align-self: flex-end;
+}

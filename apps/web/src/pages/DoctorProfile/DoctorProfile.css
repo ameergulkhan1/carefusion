@@ -1,0 +1,388 @@
+.doctor-profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: var(--primary-color, #007bff);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s;
+}
+
+.back-button:hover {
+  color: var(--primary-dark, #0056b3);
+  text-decoration: underline;
+}
+
+.doctor-profile-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.doctor-profile-loading,
+.doctor-profile-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 20px;
+}
+
+/* Header Section */
+.profile-header {
+  display: flex;
+  gap: 30px;
+  padding: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.profile-image-section {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.verified-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #10b981;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.verified-icon {
+  font-size: 14px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.profile-specialization {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+  opacity: 0.95;
+}
+
+.profile-qualifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.qualification-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.profile-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.profile-stats .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.stat-text {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.profile-languages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.languages-label {
+  font-weight: 600;
+}
+
+/* Profile Sections */
+.profile-section {
+  padding: 30px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.profile-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-icon {
+  font-size: 24px;
+}
+
+.bio-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* Clinic Information */
+.clinic-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  font-size: 15px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #374151;
+  min-width: 120px;
+}
+
+.info-value {
+  color: #6b7280;
+  flex: 1;
+}
+
+/* Contact Information */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+.contact-icon {
+  font-size: 24px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.contact-value {
+  font-size: 16px;
+  color: #1f2937;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.contact-value:hover {
+  color: var(--primary-color, #007bff);
+}
+
+/* Availability Schedule */
+.availability-schedule {
+  margin-top: 10px;
+}
+
+.schedule-table {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #f9fafb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.schedule-row {
+  display: flex;
+  padding: 14px 20px;
+  background: white;
+}
+
+.schedule-row:hover {
+  background: #f3f4f6;
+}
+
+.schedule-day {
+  font-weight: 600;
+  color: #374151;
+  min-width: 140px;
+  font-size: 15px;
+}
+
+.schedule-time {
+  color: #059669;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.no-availability {
+  color: #6b7280;
+  font-size: 15px;
+  padding: 20px;
+  text-align: center;
+  background: #f9fafb;
+  border-radius: 8px;
+}
+
+/* Actions */
+.profile-actions {
+  padding: 30px;
+  background: #f9fafb;
+  display: flex;
+  justify-content: center;
+}
+
+.book-appointment-btn {
+  min-width: 250px;
+  font-size: 18px;
+  padding: 14px 32px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .doctor-profile-container {
+    padding: 10px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .profile-image,
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-name {
+    font-size: 26px;
+  }
+
+  .profile-specialization {
+    font-size: 18px;
+  }
+
+  .profile-stats {
+    justify-content: center;
+  }
+
+  .profile-section {
+    padding: 20px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .schedule-row {
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 16px;
+  }
+
+  .schedule-day {
+    min-width: auto;
+    font-size: 14px;
+  }
+
+  .schedule-time {
+    font-size: 14px;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .info-label {
+    min-width: auto;
+  }
+
+  .book-appointment-btn {
+    width: 100%;
+    min-width: auto;
+  }
+}

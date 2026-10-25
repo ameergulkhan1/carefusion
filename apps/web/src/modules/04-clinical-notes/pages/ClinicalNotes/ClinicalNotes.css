@@ -1,0 +1,8 @@
+.clinical-notes {
+  padding: var(--spacing-lg);
+}
+
+.clinical-notes h2 {
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
+}

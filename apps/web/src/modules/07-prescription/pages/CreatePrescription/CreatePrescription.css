@@ -1,0 +1,142 @@
+.create-prescription {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.prescription-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.create-prescription input,
+.create-prescription select,
+.create-prescription textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d9dee5;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.form-row label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #243145;
+}
+
+.patient-summary {
+  border: 1px solid #d6e4ff;
+  background: #f7faff;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.patient-summary h4 {
+  margin: 0 0 10px;
+  color: #1d4ed8;
+}
+
+.patient-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.patient-summary-grid .label {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: auto;
+}
+
+.medications-section {
+  border: 1px solid #e3e8f0;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fafcff;
+}
+
+.medications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.medications-header h4 {
+  margin: 0;
+  color: #1f2c42;
+}
+
+.link-btn {
+  border: 0;
+  background: transparent;
+  color: #0b69d4;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.medication-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(120px, 1fr)) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e7ecf4;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.remove-med-btn {
+  border: 1px solid #e5a1a1;
+  color: #a52727;
+  background: #fff5f5;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.remove-med-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1000px) {
+  .medication-row {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .create-prescription {
+    padding: 12px;
+  }
+
+  .patient-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-row {
+    grid-template-columns: 1fr;
+  }
+}

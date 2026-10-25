@@ -1,0 +1,236 @@
+/* Audit Logs Page Styles */
+.audit-logs-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.audit-logs-header {
+  margin-bottom: 30px;
+}
+
+.audit-logs-header h1 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin: 0 0 10px 0;
+}
+
+.audit-logs-header p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.error-alert {
+  background-color: #ffebee;
+  border-left: 4px solid #d32f2f;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-alert button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #d32f2f;
+  cursor: pointer;
+}
+
+.audit-logs-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 10px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-btn.active {
+  background-color: #1976d2;
+  color: white;
+  border-color: #1976d2;
+}
+
+.view-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.export-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.export-btn {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.export-btn:hover {
+  background-color: #45a049;
+}
+
+.audit-logs-filters {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.audit-logs-filters h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+.reset-btn {
+  padding: 8px 16px;
+  background-color: #757575;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.reset-btn:hover {
+  background-color: #616161;
+}
+
+.suspicious-activities-alert {
+  background-color: #fff3e0;
+  border-left: 4px solid #f57c00;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.suspicious-activities-alert h3 {
+  margin: 0 0 15px 0;
+  color: #f57c00;
+}
+
+.suspicious-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.suspicious-item {
+  background: white;
+  padding: 12px;
+  border-radius: 4px;
+  border-left: 3px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suspicious-item.severity-critical {
+  border-left-color: #d32f2f;
+}
+
+.suspicious-item.severity-high {
+  border-left-color: #f57c00;
+}
+
+.suspicious-item.severity-medium {
+  border-left-color: #fbc02d;
+}
+
+.suspicious-item.severity-low {
+  border-left-color: #388e3c;
+}
+
+.activity-type {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.activity-detail {
+  color: #666;
+  font-size: 13px;
+  flex: 1;
+  margin: 0 15px;
+}
+
+.activity-time {
+  color: #999;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.empty-state {
+  background: white;
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 8px;
+  color: #999;
+}

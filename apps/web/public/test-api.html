@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - ClinixSol</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        button.danger {
+            background: #dc2626;
+        }
+        button.danger:hover {
+            background: #b91c1c;
+        }
+        button.success {
+            background: #16a34a;
+        }
+        button.success:hover {
+            background: #15803d;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+        }
+        .error {
+            background: #fef2f2;
+            border-left-color: #dc2626;
+            color: #991b1b;
+        }
+        .success {
+            background: #f0fdf4;
+            border-left-color: #16a34a;
+            color: #166534;
+        }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .status.online {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status.offline {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .test-section h2 {
+            color: #1e293b;
+            margin-top: 0;
+        }
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #93c5fd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #1e40af;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 ClinixSol API Debugger</h1>
+        <p class="subtitle">Test your backend and ML service endpoints</p>
+
+        <div class="info-box">
+            <h3>📋 Quick Fix Instructions</h3>
+            <ol>
+                <li>Click "Test All Services" below to see what's failing</li>
+                <li>If Backend returns wrong format → Run: <code>.\FIX_SYMPTOM_ERROR.ps1</code></li>
+                <li>Restart backend server</li>
+                <li>Test again!</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 Quick Tests</h2>
+            <button onclick="testAllServices()">🚀 Test All Services</button>
+            <button onclick="clearResults()" class="danger">🗑️ Clear Results</button>
+        </div>
+
+        <div class="test-section">
+            <h2>🔬 Individual Tests</h2>
+            <button onclick="testMLHealth()">Test ML Service Health</button>
+            <button onclick="testMLCategorized()">Test ML Categorized Symptoms</button>
+            <button onclick="testBackendAPI()">Test Backend API</button>
+            <button onclick="testBackendStructure()">Analyze Backend Response</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const ML_SERVICE_URL = 'http://localhost:5001';
+        const BACKEND_URL = 'http://localhost:5000/api';
+
+        function addResult(title, content, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `<h3>${title}</h3>${content}`;
+            results.appendChild(div);
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        async function testMLHealth() {
+            addResult('🔄 Testing ML Service Health...', '<div class="spinner"></div>');
+            
+            try {
+                const response = await fetch(`${ML_SERVICE_URL}/health`);
+                const data = await response.json();
+                
+                if (data.status === 'healthy') {
+                    addResult(
+                        '✅ ML Service Health Check',
+                        `<span class="status online">ONLINE</span>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`,
+                        'success'
+                    );
+                } else {
+                    addResult(
+                        '⚠️ ML Service Health Check',
+                        `<span class="status offline">NOT READY</span>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`,
+                        'error'
+                    );
+                }
+            } catch (error) {
+                addResult(
+                    '❌ ML Service Health Check Failed',
+                    `<p>Error: ${error.message}</p>
+                    <p><strong>Solution:</strong> Start ML service with:</p>
+                    <pre>cd d:\\clinixsol-frontend\\ml-service
+python app\\main.py</pre>`,
+                    'error'
+                );
+            }
+        }
+
+        async function testMLCategorized() {
+            addResult('🔄 Testing ML Categorized Symptoms...', '<div class="spinner"></div>');
+            
+            try {
+                const response = await fetch(`${ML_SERVICE_URL}/symptoms/categorized`);
+                const data = await response.json();
+                
+                if (data.success && data.data && data.data.categories) {
+                    const categoryCount = data.data.categories.length;
+                    addResult(
+                        '✅ ML Service Categorized Symptoms',
+                        `<p><strong>Categories Found:</strong> ${categoryCount}</p>
+                        <p><strong>Structure:</strong> ✅ Correct (data.data.categories)</p>
+                        <pre>${JSON.stringify(data, null, 2).substring(0, 1000)}...</pre>`,
+                        'success'
+                    );
+                } else {
+                    addResult(
+                        '⚠️ ML Service Response',
+                        `<p>Response structure is incorrect</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`,
+                        'error'
+                    );
+                }
+            } catch (error) {
+                addResult(
+                    '❌ ML Service Categorized Symptoms Failed',
+                    `<p>Error: ${error.message}</p>`,
+                    'error'
+                );
+            }
+        }
+
+        async function testBackendAPI() {
+            addResult('🔄 Testing Backend API...', '<div class="spinner"></div>');
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/symptoms/available`);
+                const data = await response.json();
+                
+                console.log('Backend Response:', data);
+                
+                if (data.success && data.data) {
+                    if (data.data.categories && Array.isArray(data.data.categories)) {
+                        addResult(
+                            '✅ Backend API - Symptoms/Available',
+                            `<p><strong>Status:</strong> <span class="status online">CORRECT FORMAT</span></p>
+                            <p><strong>Categories:</strong> ${data.data.categories.length}</p>
+                            <p><strong>Structure:</strong> ✅ response.data.categories exists</p>
+                            <pre>${JSON.stringify(data, null, 2).substring(0, 1000)}...</pre>`,
+                            'success'
+                        );
+                    } else {
+                        addResult(
+                            '❌ Backend API - Wrong Format',
+                            `<p><strong>Status:</strong> <span class="status offline">INCORRECT FORMAT</span></p>
+                            <p><strong>Issue:</strong> response.data.categories is missing</p>
+                            <p><strong>Fix:</strong> Backend files need to be updated</p>
+                            <p><strong>Run:</strong> <code>.\\FIX_SYMPTOM_ERROR.ps1</code></p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>`,
+                            'error'
+                        );
+                    }
+                } else {
+                    addResult(
+                        '❌ Backend API - Invalid Response',
+                        `<p><strong>Issue:</strong> Response missing success or data fields</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`,
+                        'error'
+                    );
+                }
+            } catch (error) {
+                addResult(
+                    '❌ Backend API Failed',
+                    `<p>Error: ${error.message}</p>
+                    <p><strong>Solution:</strong> Start backend with:</p>
+                    <pre>cd D:\\clinixsol-backend
+npm start</pre>`,
+                    'error'
+                );
+            }
+        }
+
+        async function testBackendStructure() {
+            addResult('🔄 Analyzing Backend Response Structure...', '<div class="spinner"></div>');
+            
+            try {
+                const response = await fetch(`${BACKEND_URL}/symptoms/available`);
+                const data = await response.json();
+                
+                let analysis = '<h4>📊 Response Analysis:</h4><ul>';
+                
+                // Check success field
+                analysis += `<li><strong>success:</strong> ${data.success ? '✅ true' : '❌ false/missing'}</li>`;
+                
+                // Check data field
+                if (data.data) {
+                    analysis += `<li><strong>data:</strong> ✅ exists</li>`;
+                    
+                    // Check what's in data
+                    const dataKeys = Object.keys(data.data);
+                    analysis += `<li><strong>data keys:</strong> [${dataKeys.join(', ')}]</li>`;
+                    
+                    // Check for categories
+                    if (data.data.categories) {
+                        analysis += `<li><strong>data.categories:</strong> ✅ exists (${data.data.categories.length} items)</li>`;
+                        
+                        // Check first category structure
+                        if (data.data.categories[0]) {
+                            const firstCat = data.data.categories[0];
+                            analysis += `<li><strong>First category:</strong>
+                                <ul>
+                                    <li>name: ${firstCat.name || '❌ missing'}</li>
+                                    <li>symptoms: ${firstCat.symptoms ? `✅ ${firstCat.symptoms.length} items` : '❌ missing'}</li>
+                                </ul>
+                            </li>`;
+                        }
+                        
+                        analysis += '</ul>';
+                        
+                        addResult(
+                            '✅ Backend Structure Analysis',
+                            analysis + '<p><strong>Verdict:</strong> ✅ Structure is CORRECT!</p>',
+                            'success'
+                        );
+                    } else {
+                        analysis += `<li><strong>data.categories:</strong> ❌ MISSING</li>`;
+                        analysis += '</ul>';
+                        addResult(
+                            '❌ Backend Structure Analysis',
+                            analysis + 
+                            '<p><strong>Verdict:</strong> ❌ Backend needs updating</p>' +
+                            '<p><strong>Fix:</strong> Run <code>.\\FIX_SYMPTOM_ERROR.ps1</code></p>',
+                            'error'
+                        );
+                    }
+                } else {
+                    analysis += `<li><strong>data:</strong> ❌ MISSING</li>`;
+                    analysis += '</ul>';
+                    addResult(
+                        '❌ Backend Structure Analysis',
+                        analysis + '<p><strong>Verdict:</strong> ❌ Backend response is invalid</p>',
+                        'error'
+                    );
+                }
+                
+                // Show full response
+                addResult(
+                    '📦 Full Backend Response',
+                    `<pre>${JSON.stringify(data, null, 2)}</pre>`
+                );
+                
+            } catch (error) {
+                addResult(
+                    '❌ Backend Analysis Failed',
+                    `<p>Error: ${error.message}</p>`,
+                    'error'
+                );
+            }
+        }
+
+        async function testAllServices() {
+            clearResults();
+            addResult('🚀 Running All Tests...', '<p>Please wait...</p>');
+            
+            await testMLHealth();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            await testMLCategorized();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            await testBackendAPI();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            await testBackendStructure();
+            
+            addResult(
+                '🎯 Test Summary',
+                '<p>All tests completed! Check results above.</p>',
+                'success'
+            );
+        }
+    </script>
+</body>
+</html>

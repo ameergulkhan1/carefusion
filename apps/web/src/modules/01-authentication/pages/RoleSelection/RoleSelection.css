@@ -1,0 +1,27 @@
+.role-selection-page {
+  text-align: center;
+  padding: var(--spacing-xl);
+}
+
+.role-selection-page h2 {
+  margin-bottom: var(--spacing-xl);
+  color: var(--primary-color);
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.role-card {
+  cursor: pointer;
+  text-align: center;
+}
+
+.role-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+}

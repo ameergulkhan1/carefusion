@@ -1,0 +1,102 @@
+.lab-orders-page {
+  padding: 32px;
+  font-family: 'Inter', sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header { margin-bottom: 24px; }
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0a1128;
+  letter-spacing: -0.025em;
+  margin: 0 0 6px;
+}
+.page-subtitle { color: #6b7280; margin: 0; font-size: 0.9375rem; }
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #4b5563;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.filter-btn:hover { background: #f9fafb; }
+.filter-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+.orders-table-wrapper {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.orders-table { width: 100%; border-collapse: collapse; }
+.orders-table thead { background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+.orders-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.orders-table tbody tr { border-bottom: 1px solid #f3f4f6; }
+.orders-table tbody tr:hover { background: #f9fafb; }
+.orders-table td { padding: 16px 18px; font-size: 0.875rem; color: #4b5563; }
+.cell-sub { font-size: 0.75rem; color: #9ca3af; margin-top: 2px; }
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.action-buttons { display: flex; gap: 6px; }
+.btn-action {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.btn-action:hover { background: #eff6ff; border-color: #2563eb; }
+.btn-action.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+.btn-action.primary:hover { background: #1d4ed8; }
+
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f9fafb;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
+  color: #6b7280;
+}
+.empty-state h3 { color: #0a1128; margin: 0 0 8px; }

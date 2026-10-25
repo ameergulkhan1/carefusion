@@ -1,0 +1,26 @@
+.notifications {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.notifications h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary-color);
+}
+
+.notification-card {
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-card.unread {
+  border-left: 4px solid var(--primary-color);
+}
+
+.notification-time {
+  font-size: 0.875rem;
+  color: #666;
+}

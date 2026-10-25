@@ -1,0 +1,209 @@
+/* Violations List Styles */
+.violations-list-container {
+  margin-top: 20px;
+}
+
+.violations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.violation-card {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  border-left: 4px solid;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.violation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.violation-card.severity-red {
+  border-left-color: #d32f2f;
+}
+
+.violation-card.severity-orange {
+  border-left-color: #f57c00;
+}
+
+.violation-card.severity-yellow {
+  border-left-color: #fbc02d;
+}
+
+.violation-card.severity-green {
+  border-left-color: #388e3c;
+}
+
+.violation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.violation-header h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #1a1a1a;
+}
+
+.severity-icon {
+  font-size: 20px;
+}
+
+.standard-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.standard-badge.hipaa {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.standard-badge.gdpr {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.standard-badge.hitech {
+  background-color: #fbe9e7;
+  color: #d84315;
+}
+
+.violation-description {
+  margin: 0 0 15px 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.violation-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.detail-item .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.detail-item .value {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.detail-item .value.status-pending {
+  color: #f57c00;
+}
+
+.detail-item .value.status-resolved {
+  color: #388e3c;
+}
+
+.detail-item .value.status-open {
+  color: #d32f2f;
+}
+
+.violation-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.remediation-btn {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.remediation-btn:hover {
+  background-color: #f57c00;
+}
+
+.remediation-info {
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.remediation-info h4 {
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.remediation-info ol {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.remediation-info li {
+  margin-bottom: 5px;
+}
+
+.empty-violations {
+  background: white;
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #388e3c;
+  font-size: 16px;
+}
+
+.empty-violations p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .violations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .violation-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .standard-badge {
+    align-self: flex-start;
+  }
+}

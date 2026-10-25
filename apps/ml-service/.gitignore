@@ -1,0 +1,118 @@
+# ============================================
+# PYTHON BYTECODE
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ============================================
+# VIRTUAL ENVIRONMENTS
+# ============================================
+.venv/
+venv/
+ENV/
+env/
+.python-version
+
+# ============================================
+# DISTRIBUTION / PACKAGING
+# ============================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ============================================
+# TESTING / COVERAGE
+# ============================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ============================================
+# TYPE CHECKING / LINTING
+# ============================================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.pyre/
+.pytype/
+
+# ============================================
+# JUPYTER NOTEBOOKS
+# ============================================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ============================================
+# DATA / MODELS (uncomment if not committing)
+# ============================================
+# data/
+# *.csv
+# *.pkl
+# *.joblib
+# *.h5
+# *.onnx
+# *.pt
+# *.pth
+# models/
+# checkpoints/
+
+# ============================================
+# ENVIRONMENT
+# ============================================
+.env
+.env.local
+.env.*.local
+*.env
+
+# ============================================
+# LOGS
+# ============================================
+*.log
+logs/
+
+# ============================================
+# OS FILES
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ============================================
+# IDE / EDITORS
+# ============================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# ============================================
+# VERCEL
+# ============================================
+.vercel/
+
+# ============================================
+# LOCAL SCRIPTS (Windows)
+# ============================================
+# Keep start.bat committed; ignore local variants
+start.local.bat
+*.local.bat

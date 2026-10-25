@@ -1,0 +1,144 @@
+.doctor-dashboard {
+  padding: 1.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.loading-spinner {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.dashboard-header {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-section h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #0f172a;
+}
+
+.dashboard-subtitle {
+  margin: 0.35rem 0 0;
+  font-size: 0.92rem;
+  color: #64748b;
+}
+
+.compact-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.summary-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.summary-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.summary-label {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.option-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  padding: 0.9rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.option-card h2 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.option-card p {
+  margin: 0.45rem 0 0;
+  font-size: 0.84rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.option-card:hover {
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.12);
+}
+
+.options-footer {
+  margin-top: 0.9rem;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  font-size: 0.8rem;
+  color: #2563eb;
+  text-decoration: none;
+  padding: 0.3rem 0.55rem;
+  border-radius: 8px;
+  background: #eaf2ff;
+}
+
+.footer-link:hover {
+  background: #dbeafe;
+}
+
+@media (max-width: 768px) {
+  .doctor-dashboard {
+    padding: 1rem;
+  }
+
+  .compact-summary,
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

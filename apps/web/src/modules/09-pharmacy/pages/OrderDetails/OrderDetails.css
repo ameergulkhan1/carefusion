@@ -1,0 +1,15 @@
+.order-details-page { padding: 32px; font-family: Inter, sans-serif; max-width: 1000px; margin: 0 auto; }
+.back-btn { background: none; border: none; color: #2563eb; cursor: pointer; font-weight: 600; margin-bottom: 20px; padding: 0; font-size: 0.9rem; }
+.details-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.details-header h1 { font-size: 1.75rem; color: #0a1128; margin: 0 0 4px; }
+.details-header p { color: #6b7280; margin: 0; font-size: 0.875rem; }
+.status-select { padding: 10px 16px; border: 1px solid #e5e7eb; border-radius: 8px; font-weight: 600; background: #fff; cursor: pointer; font-family: inherit; }
+.details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.details-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.details-card h3 { font-size: 0.875rem; color: #6b7280; text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 12px; font-weight: 600; }
+.details-card p { margin: 4px 0; color: #4b5563; font-size: 0.9375rem; }
+.items-table { width: 100%; border-collapse: collapse; }
+.items-table th { text-align: left; padding: 8px; font-size: 0.75rem; text-transform: uppercase; color: #6b7280; border-bottom: 1px solid #e5e7eb; }
+.items-table td { padding: 12px 8px; border-bottom: 1px solid #f3f4f6; }
+.total-card div { display: flex; justify-content: space-between; padding: 8px 0; }
+.total-card .grand-total { border-top: 2px solid #e5e7eb; padding-top: 12px; margin-top: 8px; font-size: 1.125rem; }

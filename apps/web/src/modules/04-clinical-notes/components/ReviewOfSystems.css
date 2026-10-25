@@ -1,0 +1,90 @@
+/* Review of Systems Component */
+
+.review-of-systems {
+  width: 100%;
+}
+
+.system-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  border-left: 3px solid #4299e1;
+}
+
+.system-section:last-child {
+  margin-bottom: 0;
+}
+
+.system-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+  text-transform: capitalize;
+}
+
+.symptoms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.symptom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+
+.symptom-checkbox:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.symptom-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin: 0;
+  accent-color: #4299e1;
+}
+
+.symptom-checkbox input[type="checkbox"]:checked + span {
+  font-weight: 600;
+  color: #2c5282;
+}
+
+.symptom-checkbox span {
+  flex: 1;
+  user-select: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .symptoms-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .symptoms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .system-section {
+    padding: 0.75rem;
+  }
+
+  .symptom-checkbox {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,258 @@
+/* Security Compliance Page Styles */
+.security-compliance-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.compliance-header {
+  margin-bottom: 30px;
+}
+
+.compliance-header h1 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin: 0 0 10px 0;
+}
+
+.compliance-header p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.compliance-overview {
+  margin-bottom: 30px;
+}
+
+.compliance-overview h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.compliance-scores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.compliance-card {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.compliance-card h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.compliance-card .score {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.compliance-card .status {
+  font-size: 12px;
+  margin: 0;
+}
+
+.compliance-card.green {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #4caf50;
+}
+
+.compliance-card.yellow {
+  background-color: #fff9c4;
+  color: #f57f17;
+  border-left: 4px solid #fbc02d;
+}
+
+.compliance-card.red {
+  background-color: #ffebee;
+  color: #c62828;
+  border-left: 4px solid #f44336;
+}
+
+.compliance-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.compliance-detail-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.violations-section {
+  margin-bottom: 30px;
+}
+
+.violations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.violations-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a1a1a;
+}
+
+.report-btn {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.report-btn:hover {
+  background-color: #1565c0;
+}
+
+.violation-form {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.violation-form h3 {
+  margin: 0 0 20px 0;
+  color: #1a1a1a;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #666;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+.compliance-status-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.compliance-status-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: #1a1a1a;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.status-item {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border-left: 3px solid #ddd;
+}
+
+.status-item h4 {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+  border-left-color: #4caf50;
+}
+
+.status-badge.inactive {
+  background-color: #ffcdd2;
+  color: #c62828;
+  border-left-color: #f44336;
+}
+
+.status-item {
+  border-left: 3px solid;
+}
+
+.status-item:has(.status-badge.active) {
+  border-left-color: #4caf50;
+}
+
+.status-item:has(.status-badge.inactive) {
+  border-left-color: #f44336;
+}

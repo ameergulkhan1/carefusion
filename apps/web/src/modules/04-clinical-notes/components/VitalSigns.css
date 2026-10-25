@@ -1,0 +1,83 @@
+/* Vital Signs Component */
+
+.vital-signs {
+  width: 100%;
+}
+
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.vital-input {
+  position: relative;
+}
+
+.vital-input label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.4rem;
+}
+
+.vital-input input {
+  width: 100%;
+  padding: 0.6rem 3rem 0.6rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.vital-input input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.vital-input input:disabled {
+  background: #f7fafc;
+  cursor: not-allowed;
+  color: #718096;
+}
+
+.vital-input .unit {
+  position: absolute;
+  right: 0.75rem;
+  top: 2.1rem;
+  color: #718096;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+/* Remove spinner from number inputs */
+.vital-input input[type="number"]::-webkit-inner-spin-button,
+.vital-input input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.vital-signs-input input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vitals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .vitals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vital-input input {
+    padding-right: 2.5rem;
+  }
+}

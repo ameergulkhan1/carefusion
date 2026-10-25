@@ -1,0 +1,188 @@
+.doctor-profile-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.profile-header-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.profile-header-card h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #0f172a;
+}
+
+.profile-header-card p {
+  margin: 0.25rem 0 0;
+  font-size: 0.92rem;
+  color: #64748b;
+}
+
+.profile-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 999px;
+  padding: 0.32rem 0.62rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge.verified {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.profile-card {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.profile-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.profile-card h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.detail-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.detail-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.detail-list span {
+  color: #64748b;
+  font-size: 0.84rem;
+}
+
+.detail-list strong {
+  color: #1e293b;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.bio-text {
+  margin: 0;
+  color: #334155;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.pill-wrap {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.stack-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.stack-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.stack-item strong {
+  color: #1e293b;
+  font-size: 0.88rem;
+}
+
+.stack-item span {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.row-item {
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+}
+
+.muted {
+  color: #94a3b8;
+  font-size: 0.86rem;
+}
+
+.doctor-profile-loading,
+.doctor-profile-empty {
+  min-height: 260px;
+  background: #fff;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.doctor-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .row-item {
+    grid-template-columns: 1fr;
+  }
+}

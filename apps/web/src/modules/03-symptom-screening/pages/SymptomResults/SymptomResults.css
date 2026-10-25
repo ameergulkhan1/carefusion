@@ -1,0 +1,764 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ============================================
+   SYMPTOM RESULTS — DESIGN-SYSTEM ALIGNED
+   ============================================ */
+
+.symptom-results-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 88px 32px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1a1a2e;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.results-header h1 {
+  display: block;
+  width: 100%;
+  font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin: 0 0 8px 0;
+  background: linear-gradient(to right, #2563eb 0%, #9333ea 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.results-timestamp {
+  color: #6b7280;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.results-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SHARED BUTTON
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #0a1128;
+  border-color: #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* ============================================
+   URGENCY CARD
+   ============================================ */
+.urgency-card {
+  margin-bottom: 32px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  border-left: 4px solid;
+  padding: 24px 28px;
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.urgency-card:hover {
+  box-shadow: 0 8px 24px -8px rgba(10, 17, 40, 0.1);
+}
+
+.urgency-card.urgency-critical {
+  background: #fef2f2;
+  border-left-color: #dc2626;
+}
+
+.urgency-card.urgency-high {
+  background: #fffbeb;
+  border-left-color: #d97706;
+}
+
+.urgency-card.urgency-medium {
+  background: #eff6ff;
+  border-left-color: #2563eb;
+}
+
+.urgency-card.urgency-low {
+  background: #ecfdf5;
+  border-left-color: #059669;
+}
+
+.urgency-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.urgency-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.urgency-text h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0a1128;
+}
+
+.urgency-text p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* ============================================
+   RESULTS LAYOUT
+   ============================================ */
+.results-content {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: start;
+}
+
+.results-left-column,
+.results-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============================================
+   CARD BASE (shared look for all inner cards)
+   ============================================ */
+.symptoms-card,
+.specialist-card,
+.tests-card,
+.prediction-card,
+.actions-card,
+.disclaimer-card,
+.no-predictions-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.symptoms-card:hover,
+.specialist-card:hover,
+.tests-card:hover,
+.actions-card:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 12px 32px -8px rgba(10, 17, 40, 0.08);
+}
+
+/* Section titles inside cards */
+.symptoms-card h3,
+.specialist-card h3,
+.tests-card h3,
+.prediction-card h3,
+.actions-card h3 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #0a1128;
+  letter-spacing: -0.015em;
+  margin: 0 0 16px 0;
+  line-height: 1.35;
+}
+
+/* ============================================
+   SYMPTOMS CARD
+   ============================================ */
+.symptoms-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.symptom-chip {
+  padding: 7px 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 100px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transition: all 0.2s ease;
+}
+
+.symptom-chip:hover {
+  background: #dbeafe;
+  border-color: #2563eb;
+}
+
+.additional-patient-info {
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.additional-patient-info h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #0a1128;
+  letter-spacing: -0.015em;
+  margin: 0 0 14px 0;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.info-value {
+  font-size: 0.9375rem;
+  color: #0a1128;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.notes-section {
+  padding: 14px 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-top: 14px;
+}
+
+.notes-section h5 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 6px 0;
+}
+
+.notes-section p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ============================================
+   SPECIALIST CARD
+   ============================================ */
+.specialist-info {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 18px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+}
+
+.specialist-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.specialist-details h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e40af;
+  letter-spacing: -0.015em;
+  margin: 0 0 4px 0;
+}
+
+.specialist-details p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.book-appointment-btn,
+.book-test-btn {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: #2563eb;
+  color: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+}
+
+.book-appointment-btn:hover,
+.book-test-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+}
+
+/* ============================================
+   TESTS CARD
+   ============================================ */
+.tests-list {
+  margin-bottom: 20px;
+}
+
+.test-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+
+.test-item:last-child {
+  margin-bottom: 0;
+}
+
+.test-item:hover {
+  background: #ffffff;
+  border-color: #d1d5db;
+}
+
+.test-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.test-name {
+  color: #0a1128;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================
+   PREDICTIONS
+   ============================================ */
+.results-right-column h2 {
+  display: block;
+  width: 100%;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #0a1128;
+  margin: 0 0 4px 0;
+  line-height: 1.25;
+}
+
+.prediction-card {
+  border-left: 3px solid #2563eb;
+}
+
+.prediction-card:hover {
+  box-shadow: 0 12px 32px -8px rgba(10, 17, 40, 0.1);
+  border-color: #2563eb;
+}
+
+.prediction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.prediction-header > div:first-child {
+  flex-grow: 1;
+}
+
+.prediction-header h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0a1128;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+/* Confidence badge */
+.confidence-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.confidence-badge.confidence-high {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.confidence-badge.confidence-medium {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.confidence-badge.confidence-low {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+/* ============================================
+   PROBABILITY CIRCLE
+   ============================================ */
+.probability-circle {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+}
+
+.probability-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.probability-bg {
+  fill: none;
+  stroke: #e5e7eb;
+  stroke-width: 3;
+}
+
+.probability-fill {
+  fill: none;
+  stroke: #2563eb;
+  stroke-width: 3;
+  stroke-linecap: round;
+  animation: probability-animation 1s ease-out forwards;
+}
+
+@keyframes probability-animation {
+  from { stroke-dasharray: 0, 100; }
+}
+
+.probability-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================
+   PREDICTION DETAILS
+   ============================================ */
+.prediction-description,
+.prediction-precautions {
+  margin-bottom: 20px;
+}
+
+.prediction-description:last-child,
+.prediction-precautions:last-child {
+  margin-bottom: 0;
+}
+
+.prediction-description h4,
+.prediction-precautions h4 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #0a1128;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prediction-description p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.7;
+  font-size: 0.875rem;
+}
+
+.prediction-precautions ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.prediction-precautions li {
+  color: #4b5563;
+  margin-bottom: 8px;
+  line-height: 1.6;
+  font-size: 0.875rem;
+}
+
+.prediction-precautions li:last-child {
+  margin-bottom: 0;
+}
+
+.prediction-precautions li::marker {
+  color: #2563eb;
+}
+
+/* ============================================
+   NO PREDICTIONS
+   ============================================ */
+.no-predictions-card {
+  text-align: center;
+  padding: 40px 28px;
+  background: #f9fafb;
+  border-style: dashed;
+}
+
+.no-predictions-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* ============================================
+   ACTIONS CARD
+   ============================================ */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  min-width: 180px;
+  padding: 12px 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.action-buttons button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+}
+
+.action-buttons button.saved {
+  background: #059669;
+  cursor: default;
+}
+
+.action-buttons button.saved:hover {
+  background: #059669;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ============================================
+   DISCLAIMER CARD
+   ============================================ */
+.disclaimer-card {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-left: 3px solid #d97706;
+}
+
+.disclaimer-card h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #92400e;
+  letter-spacing: -0.015em;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.disclaimer-card p {
+  margin: 0;
+  color: #78350f;
+  line-height: 1.65;
+  font-size: 0.875rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .results-content {
+    grid-template-columns: 1fr;
+  }
+
+  .results-left-column {
+    order: 2;
+  }
+
+  .results-right-column {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .symptom-results-container {
+    padding: 56px 20px;
+  }
+
+  .results-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .results-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .results-actions .btn {
+    width: 100%;
+  }
+
+  .results-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .urgency-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+
+  .prediction-card,
+  .symptoms-card,
+  .specialist-card,
+  .tests-card,
+  .actions-card,
+  .disclaimer-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .symptom-results-container {
+    padding: 40px 16px;
+  }
+
+  .results-header h1 {
+    font-size: 1.375rem;
+  }
+
+  .urgency-icon {
+    font-size: 1.75rem;
+  }
+
+  .prediction-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .probability-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .probability-text {
+    font-size: 1rem;
+  }
+}

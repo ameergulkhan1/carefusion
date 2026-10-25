@@ -1,0 +1,37 @@
+.track-order {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.order-timeline {
+  padding: var(--spacing-lg);
+}
+
+.timeline-stage {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.5;
+}
+
+.timeline-stage.completed {
+  opacity: 1;
+}
+
+.stage-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--light-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--spacing-md);
+  font-weight: bold;
+}
+
+.timeline-stage.completed .stage-icon {
+  background: var(--success-color);
+  color: white;
+}

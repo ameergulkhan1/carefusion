@@ -1,0 +1,17 @@
+.upload-documents {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.file-list {
+  margin: var(--spacing-md) 0;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  background: var(--light-color);
+  margin-bottom: var(--spacing-xs);
+  border-radius: var(--border-radius);
+}

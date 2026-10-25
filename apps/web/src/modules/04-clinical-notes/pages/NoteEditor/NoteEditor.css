@@ -1,0 +1,22 @@
+.note-editor {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.note-title-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  font-size: 1.5rem;
+  border: none;
+  border-bottom: 2px solid var(--light-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.note-content-textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid var(--light-color);
+  border-radius: var(--border-radius);
+  font-family: inherit;
+}

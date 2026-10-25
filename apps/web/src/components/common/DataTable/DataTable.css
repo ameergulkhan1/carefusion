@@ -1,0 +1,28 @@
+.data-table-container {
+  overflow-x: auto;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.data-table th {
+  background: var(--primary-color);
+  color: white;
+  padding: var(--spacing-md);
+  text-align: left;
+}
+
+.data-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--light-color);
+}
+
+.data-table tbody tr:hover {
+  background: var(--light-color);
+  cursor: pointer;
+}

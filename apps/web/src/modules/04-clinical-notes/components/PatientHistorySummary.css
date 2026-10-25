@@ -1,0 +1,151 @@
+/* Patient History Summary Component */
+
+.patient-history-summary {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+}
+
+.history-header {
+  padding: 1rem 1.25rem;
+  background: #f7fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.history-header:hover {
+  background: #edf2f7;
+}
+
+.history-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1a202c;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.expand-icon {
+  color: #718096;
+  font-size: 0.85rem;
+  transition: transform 0.2s;
+}
+
+.history-content {
+  padding: 1rem;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: 1.5rem;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f7fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.visit-date {
+  font-size: 0.8rem;
+  color: #718096;
+  font-weight: 600;
+  min-width: 70px;
+}
+
+.visit-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chief-complaint {
+  font-size: 0.9rem;
+  color: #2d3748;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.diagnosis {
+  font-size: 0.85rem;
+  color: #4a5568;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.import-btn {
+  padding: 0.4rem 0.75rem;
+  background: transparent;
+  border: 1px solid #4299e1;
+  color: #4299e1;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.import-btn:hover {
+  background: #4299e1;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .history-item {
+    flex-direction: column;
+  }
+
+  .visit-date {
+    min-width: auto;
+  }
+
+  .import-btn {
+    align-self: flex-start;
+  }
+}

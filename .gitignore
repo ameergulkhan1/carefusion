@@ -1,0 +1,145 @@
+# ============================================
+# DEPENDENCIES
+# ============================================
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+.yarnrc.yml
+
+# ============================================
+# PYTHON
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.python-version
+
+# Python caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# ============================================
+# BUILD OUTPUT
+# ============================================
+build/
+dist/
+.next/
+out/
+.cache/
+.parcel-cache/
+.turbo/
+*.tsbuildinfo
+*.log
+
+# ============================================
+# ENVIRONMENT
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+*.env
+
+# ============================================
+# DATA (training data, archives)
+# ============================================
+data/*
+!data/.gitignore
+!data/README.md
+
+# ============================================
+# LOGS
+# ============================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ============================================
+# OS FILES
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================
+# IDE / EDITORS
+# ============================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ============================================
+# ML MODEL BINARIES
+# ============================================
+# Uncomment if you don't want to commit trained models
+# apps/ml-service/**/*.pkl
+# apps/ml-service/**/*.joblib
+# apps/ml-service/**/*.h5
+# apps/ml-service/**/*.onnx
+# apps/ml-service/**/*.pt
+# apps/ml-service/**/*.pth
+
+# ============================================
+# UPLOADS / USER CONTENT
+# ============================================
+uploads/
+tmp/
+temp/
+apps/api/uploads/
+apps/api/tmp/
+
+# ============================================
+# VERCEL
+# ============================================
+.vercel/
+
+# ============================================
+# COVERAGE
+# ============================================
+coverage/
+*.lcov

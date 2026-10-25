@@ -1,0 +1,14 @@
+.user-management {
+  padding: var(--spacing-lg);
+}
+
+.user-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.user-management-header h2 {
+  color: var(--primary-color);
+}

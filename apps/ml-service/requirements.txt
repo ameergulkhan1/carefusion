@@ -1,0 +1,41 @@
+# Python ML Service Dependencies for Symptom Prediction & Clinical Notes
+# Compatible with Python 3.12
+# Install with: pip install -r requirements.txt
+
+# Core ML Libraries (Python 3.12 compatible versions)
+numpy>=1.26.0
+pandas>=2.1.0
+scikit-learn>=1.3.2
+joblib>=1.3.2
+
+# Web Framework
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Data Processing
+scipy>=1.11.0
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# API Documentation
+flasgger==0.9.7.1
+
+# Logging
+colorlog==6.7.0
+
+# Validation
+marshmallow==3.20.1
+
+# Rate Limiting
+flask-limiter==3.3.1
+
+# HTTP Requests (for service-to-service communication)
+requests>=2.31.0
+
+# PDF Parsing
+PyPDF2>=3.0.1
+
+# Image OCR
+Pillow>=10.3.0
+pytesseract>=0.3.10

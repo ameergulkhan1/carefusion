@@ -1,0 +1,121 @@
+/* Diagnosis Search Component */
+
+.diagnosis-search {
+  position: relative;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.diagnosis-input {
+  width: 100%;
+  padding: 0.75rem;
+  padding-right: 2.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.diagnosis-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.diagnosis-input.error {
+  border-color: #fc8181;
+}
+
+.loading-indicator {
+  position: absolute;
+  right: 0.75rem;
+  font-size: 1rem;
+  animation: spin 1s linear infinite;
+}
+
+.error-text {
+  color: #c53030;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.diagnosis-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.diagnosis-option {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f7fafc;
+  transition: background 0.1s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.diagnosis-option:last-child {
+  border-bottom: none;
+}
+
+.diagnosis-option:hover {
+  background: #f7fafc;
+}
+
+.diagnosis-option:active {
+  background: #edf2f7;
+}
+
+.diagnosis-code {
+  font-weight: 600;
+  color: #4299e1;
+  font-size: 0.9rem;
+}
+
+.diagnosis-description {
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+.no-results {
+  padding: 1.5rem;
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .diagnosis-dropdown {
+    max-height: 250px;
+  }
+
+  .diagnosis-option {
+    padding: 0.6rem 0.75rem;
+  }
+}

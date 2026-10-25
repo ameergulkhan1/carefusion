@@ -1,0 +1,19 @@
+:root {
+  --primary-color: #4A90E2;
+  --secondary-color: #50E3C2;
+  --danger-color: #E74C3C;
+  --warning-color: #F39C12;
+  --success-color: #27AE60;
+  --dark-color: #2C3E50;
+  --light-color: #ECF0F1;
+  --font-primary: 'Roboto', sans-serif;
+  --font-secondary: 'Open Sans', sans-serif;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}

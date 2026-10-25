@@ -1,0 +1,162 @@
+/* Patient Selector Component */
+
+.patient-selector {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.selector-tabs {
+  display: flex;
+  border-bottom: 2px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+}
+
+.selector-tabs .tab {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #718096;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.selector-tabs .tab:hover {
+  color: #2d3748;
+}
+
+.selector-tabs .tab.active {
+  color: #4299e1;
+}
+
+.selector-tabs .tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #4299e1;
+}
+
+.appointments-list,
+.patient-search {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.appointment-item,
+.patient-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: 1rem;
+}
+
+.appointment-item:hover,
+.patient-item:hover {
+  background: #f7fafc;
+  border-color: #4299e1;
+  transform: translateX(4px);
+}
+
+.appointment-patient {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.patient-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.patient-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.patient-name {
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 0.25rem;
+}
+
+.patient-meta {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+.appointment-time {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4299e1;
+}
+
+.patients-list {
+  margin-top: 1rem;
+}
+
+.loading,
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: #718096;
+}
+
+.selector-actions {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .appointment-item,
+  .patient-item {
+    padding: 0.75rem;
+  }
+
+  .patient-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .patient-name {
+    font-size: 0.95rem;
+  }
+}

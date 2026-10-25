@@ -1,0 +1,158 @@
+/* Note Card Component - Professional Design */
+
+.note-card {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.note-card-header {
+  padding: 1rem 1.25rem;
+  background: #f7fafc;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.note-patient-info h3 {
+  font-size: 1.1rem;
+  color: #1a202c;
+  margin: 0 0 0.25rem 0;
+  font-weight: 600;
+}
+
+.note-patient-id {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+.status-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-draft {
+  background: #fef5e7;
+  color: #d68910;
+}
+
+.status-completed {
+  background: #d4edda;
+  color: #1e7e34;
+}
+
+.status-reviewed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.note-card-body {
+  padding: 1.25rem;
+  flex: 1;
+}
+
+.note-meta-row {
+  display: flex;
+  margin-bottom: 0.75rem;
+  gap: 0.5rem;
+}
+
+.note-meta-row:last-child {
+  margin-bottom: 0;
+}
+
+.meta-label {
+  font-weight: 600;
+  color: #4a5568;
+  min-width: 110px;
+  font-size: 0.9rem;
+}
+
+.meta-value {
+  color: #2d3748;
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.meta-value.visit-type {
+  text-transform: capitalize;
+}
+
+.meta-value.complaint {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.meta-value.diagnosis {
+  font-weight: 500;
+  color: #2c5282;
+}
+
+.ai-badge {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.note-card-footer {
+  padding: 0.75rem 1.25rem;
+  background: #fafafa;
+  border-top: 1px solid #e2e8f0;
+}
+
+.note-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.note-actions button {
+  font-size: 0.85rem;
+}
+
+.btn-delete:hover {
+  color: #c53030;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .note-card-header {
+    flex-direction: column;
+  }
+
+  .meta-label {
+    min-width: 90px;
+    font-size: 0.85rem;
+  }
+
+  .meta-value {
+    font-size: 0.85rem;
+  }
+
+  .note-actions {
+    justify-content: space-between;
+  }
+}

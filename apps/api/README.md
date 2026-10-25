@@ -321,7 +321,7 @@ MIT License - see LICENSE file
 
 ## 👥 Team
 
-ClinixSol Development Team
+carefusion Development Team
 
 ---
 

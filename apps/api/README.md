@@ -1,4 +1,4 @@
-# ClinixSol Backend API
+# carefusion Backend API
 
 🏥 Complete Node.js/Express backend for ClinixSol healthcare platform with MongoDB, JWT authentication, Socket.IO, and background jobs.
 

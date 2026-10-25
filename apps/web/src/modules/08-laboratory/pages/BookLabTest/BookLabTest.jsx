@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import laboratoryService from '../../services/laboratoryService';
@@ -19,6 +19,11 @@ const BookLabTest = () => {
   const [selectedLabId, setSelectedLabId] = useState('');
   const [selectedTests, setSelectedTests] = useState([]);
   const [showBookingForm, setShowBookingForm] = useState(false);
+
+  // Suggestion dropdown state
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchBoxRef = useRef(null);
+
   const [bookingData, setBookingData] = useState({
     appointmentDate: '',
     sampleCollectionType: 'walk-in',
@@ -36,8 +41,18 @@ const BookLabTest = () => {
     fetchData();
   }, []);
 
-  const isSuccessResponse = (response) => Boolean(response?.success);
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
+  const isSuccessResponse = (response) => Boolean(response?.success);
   const asArray = (value) => (Array.isArray(value) ? value : []);
 
   const fetchData = async () => {
@@ -95,10 +110,85 @@ const BookLabTest = () => {
     }
   };
 
+  // Live suggestion list
+  const suggestions = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
+
+    const seen = new Set();
+    const results = [];
+
+    for (const test of tests) {
+      const name = test.testName || '';
+      const code = test.testCode || '';
+      const matchesName = name.toLowerCase().includes(q);
+      const matchesCode = code.toLowerCase().includes(q);
+
+      if (!matchesName && !matchesCode) continue;
+
+      const nameKey = `name:${name.toLowerCase()}`;
+      if (!seen.has(nameKey)) {
+        seen.add(nameKey);
+        results.push({
+          type: 'name',
+          value: name,
+          code,
+          category: test.category,
+          label: name,
+          sublabel: code ? `Code: ${code}` : test.category
+        });
+      }
+
+      if (matchesCode && code) {
+        const codeKey = `code:${code.toLowerCase()}`;
+        if (!seen.has(codeKey)) {
+          seen.add(codeKey);
+          results.push({
+            type: 'code',
+            value: code,
+            category: test.category,
+            label: code,
+            sublabel: name
+          });
+        }
+      }
+    }
+
+    results.sort((a, b) => {
+      const aStarts = a.value.toLowerCase().startsWith(q) ? 0 : 1;
+      const bStarts = b.value.toLowerCase().startsWith(q) ? 0 : 1;
+      if (aStarts !== bStarts) return aStarts - bStarts;
+      return a.value.localeCompare(b.value);
+    });
+
+    return results.slice(0, 8);
+  }, [searchQuery, tests]);
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion.value);
+    setShowSuggestions(false);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setShowSuggestions(true);
+  };
+
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter' && suggestions.length > 0) {
+      e.preventDefault();
+      setSearchQuery(suggestions[0].value);
+      setShowSuggestions(false);
+    } else if (e.key === 'Escape') {
+      setShowSuggestions(false);
+    }
+  };
+
   const filteredTests = tests.filter(test => {
     const matchesCategory = !selectedCategory || test.category === selectedCategory;
     const matchesSearch = !searchQuery || 
       (test.testName || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (test.testCode || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       (test.description || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -391,16 +481,68 @@ const BookLabTest = () => {
             </select>
           </div>
 
-          <div className="search-bar">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search tests by name or code..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          <div className="search-box-wrapper" ref={searchBoxRef}>
+            <div className="search-bar">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search tests by name or code..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onFocus={() => searchQuery && setShowSuggestions(true)}
+                onKeyDown={handleSearchKeyDown}
+                autoComplete="off"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  className="search-clear-btn"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setShowSuggestions(false);
+                  }}
+                  aria-label="Clear search"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="search-suggestions">
+                {suggestions.map((s, idx) => (
+                  <button
+                    key={`${s.type}-${s.value}-${idx}`}
+                    type="button"
+                    className="suggestion-item"
+                    onClick={() => handleSuggestionClick(s)}
+                  >
+                    <span className="suggestion-icon">
+                      {s.type === 'code' ? '🏷️' : '🧪'}
+                    </span>
+                    <span className="suggestion-text">
+                      <span className="suggestion-label">{s.label}</span>
+                      {s.sublabel && (
+                        <span className="suggestion-sublabel">{s.sublabel}</span>
+                      )}
+                    </span>
+                    {s.category && (
+                      <span className="suggestion-category">{s.category}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {showSuggestions && searchQuery.trim() && suggestions.length === 0 && (
+              <div className="search-suggestions">
+                <div className="no-suggestions">
+                  No tests match "<strong>{searchQuery}</strong>"
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

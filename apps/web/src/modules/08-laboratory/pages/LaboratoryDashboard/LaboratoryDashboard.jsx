@@ -6,6 +6,7 @@ import Loader from '../../../../components/common/Loader/Loader';
 import Button from '../../../../components/common/Button/Button';
 import Card from '../../../../components/common/Card/Card';
 import { useAuth } from '../../../../context/AuthContext';
+import { formatPKRSimple } from '../../../../utils/currencyFormatter';
 import './LaboratoryDashboard.css';
 
 const LaboratoryDashboard = () => {
@@ -53,12 +54,44 @@ const LaboratoryDashboard = () => {
     return new Date(dateString).toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
   };
 
+  // ✅ Safe helpers — never return objects
+  const getPatientName = (order) =>
+    order?.patient?.user?.fullName ||
+    order?.patientName ||
+    (order?.patient?.firstName
+      ? `${order.patient.firstName} ${order.patient.lastName || ''}`.trim()
+      : 'Patient');
+
+  const getPatientPhone = (order) =>
+    order?.patient?.user?.phone || order?.patientPhone || order?.contactPhone || 'Not provided';
+
+  const getPatientAge = (order) => {
+    const dob = order?.patient?.dateOfBirth;
+    if (dob) {
+      const years = Math.floor((Date.now() - new Date(dob).getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+      return years > 0 ? years : 'N/A';
+    }
+    return order?.patientAge || 'N/A';
+  };
+
+  const getTestName = (test) =>
+    test?.testName ||
+    test?.testId?.testName ||
+    test?.name ||
+    'Unknown Test';
+
+  const getTestCode = (test) =>
+    test?.testCode || test?.testId?.testCode || '';
+
+  const getTestPrice = (test) =>
+    Number(test?.price ?? test?.testId?.price ?? 0);
+
   const getStatusColor = (status) => {
     const statusMap = {
-      'scheduled': 'status-scheduled',
+      scheduled: 'status-scheduled',
       'in-progress': 'status-inprogress',
-      'completed': 'status-completed',
-      'cancelled': 'status-cancelled'
+      completed: 'status-completed',
+      cancelled: 'status-cancelled',
     };
     return statusMap[status] || 'status-default';
   };
@@ -71,10 +104,10 @@ const LaboratoryDashboard = () => {
   const stats = useMemo(() => {
     return {
       total: orders.length,
-      scheduled: orders.filter(o => o.orderStatus === 'scheduled').length,
-      inProgress: orders.filter(o => o.orderStatus === 'in-progress').length,
-      completed: orders.filter(o => o.orderStatus === 'completed').length,
-      cancelled: orders.filter(o => o.orderStatus === 'cancelled').length
+      scheduled: orders.filter((o) => o.orderStatus === 'scheduled').length,
+      inProgress: orders.filter((o) => o.orderStatus === 'in-progress').length,
+      completed: orders.filter((o) => o.orderStatus === 'completed').length,
+      cancelled: orders.filter((o) => o.orderStatus === 'cancelled').length,
     };
   }, [orders]);
 
@@ -86,8 +119,8 @@ const LaboratoryDashboard = () => {
       await fetchDashboardData();
     } catch (error) {
       console.error('Error updating status:', error);
-      toast.success(`Order status updated to ${newStatus}`);
-      const updatedOrders = orders.map(o => 
+      toast.error(error?.message || 'Failed to update status');
+      const updatedOrders = orders.map((o) =>
         o._id === orderId ? { ...o, orderStatus: newStatus } : o
       );
       setOrders(updatedOrders);
@@ -155,7 +188,7 @@ const LaboratoryDashboard = () => {
           <div className="section-header">
             <h2>Test Orders</h2>
             <div className="filter-tabs">
-              {['all', 'scheduled', 'in-progress', 'completed'].map(status => (
+              {['all', 'scheduled', 'in-progress', 'completed'].map((status) => (
                 <button
                   key={status}
                   className={`filter-tab ${filterStatus === status ? 'active' : ''}`}
@@ -173,19 +206,21 @@ const LaboratoryDashboard = () => {
             </Card>
           ) : (
             <div className="orders-list">
-              {filteredOrders.map(order => (
+              {filteredOrders.map((order) => (
                 <div
                   key={order._id}
                   className={`order-item ${selectedOrder?._id === order._id ? 'selected' : ''}`}
                   onClick={() => setSelectedOrder(order)}
                 >
                   <div className="order-info">
-                    <h4>Order #{order.orderId || order._id.slice(-6).toUpperCase()}</h4>
-                    <p className="order-patient">{order.patientName || 'Patient'}</p>
+                    <h4>
+                      Order #{order.orderNumber || order._id.slice(-6).toUpperCase()}
+                    </h4>
+                    <p className="order-patient">{getPatientName(order)}</p>
                     <p className="order-time">{formatDate(order.createdAt)}</p>
                   </div>
                   <span className={`order-status ${getStatusColor(order.orderStatus)}`}>
-                    {order.orderStatus}
+                    {order.orderStatus || 'pending'}
                   </span>
                 </div>
               ))}
@@ -203,15 +238,15 @@ const LaboratoryDashboard = () => {
                 <h3>Patient Information</h3>
                 <div className="detail-row">
                   <span className="label">Name:</span>
-                  <span className="value">{selectedOrder.patientName || 'Not provided'}</span>
+                  <span className="value">{getPatientName(selectedOrder)}</span>
                 </div>
                 <div className="detail-row">
                   <span className="label">Age:</span>
-                  <span className="value">{selectedOrder.patientAge || 'N/A'}</span>
+                  <span className="value">{getPatientAge(selectedOrder)}</span>
                 </div>
                 <div className="detail-row">
                   <span className="label">Contact:</span>
-                  <span className="value">{selectedOrder.patientPhone || 'Not provided'}</span>
+                  <span className="value">{getPatientPhone(selectedOrder)}</span>
                 </div>
               </div>
 
@@ -220,12 +255,15 @@ const LaboratoryDashboard = () => {
                 <h3>Order Information</h3>
                 <div className="detail-row">
                   <span className="label">Order ID:</span>
-                  <span className="value">{selectedOrder.orderId || selectedOrder._id.slice(-6).toUpperCase()}</span>
+                  <span className="value">
+                    {selectedOrder.orderNumber ||
+                      selectedOrder._id.slice(-6).toUpperCase()}
+                  </span>
                 </div>
                 <div className="detail-row">
                   <span className="label">Status:</span>
                   <span className={`status-badge ${getStatusColor(selectedOrder.orderStatus)}`}>
-                    {selectedOrder.orderStatus}
+                    {selectedOrder.orderStatus || 'pending'}
                   </span>
                 </div>
                 <div className="detail-row">
@@ -234,18 +272,47 @@ const LaboratoryDashboard = () => {
                 </div>
                 <div className="detail-row">
                   <span className="label">Collection Type:</span>
-                  <span className="value">{selectedOrder.collectionType || 'Walk-in'}</span>
+                  <span className="value" style={{ textTransform: 'capitalize' }}>
+                    {(selectedOrder.sampleCollectionType || selectedOrder.collectionType || 'walk-in').replace('-', ' ')}
+                  </span>
+                </div>
+                <div className="detail-row">
+                  <span className="label">Appointment:</span>
+                  <span className="value">{formatDate(selectedOrder.appointmentDate)}</span>
                 </div>
               </div>
 
               {/* Tests */}
               {selectedOrder.tests && selectedOrder.tests.length > 0 && (
                 <div className="details-section">
-                  <h3>Tests Ordered</h3>
+                  <h3>Tests Ordered ({selectedOrder.tests.length})</h3>
                   <div className="tests-list">
                     {selectedOrder.tests.map((test, idx) => (
-                      <div key={idx} className="test-item">
-                        <span className="test-name">{test.name || test}</span>
+                      <div key={test._id || test.testId?._id || idx} className="test-item">
+                        <div style={{ flex: 1 }}>
+                          <span className="test-name">{getTestName(test)}</span>
+                          {getTestCode(test) && (
+                            <span className="test-code" style={{ marginLeft: 8, color: '#6b7280', fontSize: '0.75rem' }}>
+                              {getTestCode(test)}
+                            </span>
+                          )}
+                        </div>
+                        <span className="test-price" style={{ fontWeight: 600 }}>
+                          {formatPKRSimple(getTestPrice(test))}
+                        </span>
+                        <span
+                          className={`test-status ${test.status || 'pending'}`}
+                          style={{
+                            marginLeft: 12,
+                            fontSize: '0.7rem',
+                            padding: '2px 8px',
+                            borderRadius: 100,
+                            background: '#f3f4f6',
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          {test.status || 'pending'}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -256,7 +323,7 @@ const LaboratoryDashboard = () => {
               <div className="details-section">
                 <h3>Update Status</h3>
                 <div className="status-actions">
-                  {['scheduled', 'in-progress', 'completed'].map(status => (
+                  {['scheduled', 'in-progress', 'completed'].map((status) => (
                     <Button
                       key={status}
                       variant={selectedOrder.orderStatus === status ? 'primary' : 'secondary'}

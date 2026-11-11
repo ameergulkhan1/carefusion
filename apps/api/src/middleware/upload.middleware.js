@@ -1,78 +1,18 @@
 
-const multer = require('multer');
-const path = require('path');
 
-const storage = multer.memoryStorage();
+const multer = require('../config/multer');
+const cloudinaryHelpers = require('./upload');
 
-const fileFilter = (req, file, cb) => {
-  const allowedMimeTypes = [
-    'image/jpeg',
-    'image/png',
-    'image/jpg',
-    'image/webp',
-    'application/pdf',
-  ];
+// Re-export everything from multer config
+module.exports = multer;
 
-  if (allowedMimeTypes.includes(file.mimetype)) {
-    return cb(null, true);
-  }
+// Attach Cloudinary helpers onto the exported object for convenience
+module.exports.uploadToCloudinary = cloudinaryHelpers.uploadToCloudinary;
+module.exports.uploadManyToCloudinary = cloudinaryHelpers.uploadManyToCloudinary;
+module.exports.uploadBufferToCloudinary = cloudinaryHelpers.uploadBufferToCloudinary;
+module.exports.destroyCloudinaryFile = cloudinaryHelpers.destroyCloudinaryFile;
+module.exports.cloudinary = cloudinaryHelpers.cloudinary;
+module.exports.FOLDER_MAP = cloudinaryHelpers.FOLDER_MAP;
 
-  cb(
-    new Error('Invalid file type. Only JPEG, PNG, WebP, and PDF are allowed.'),
-    false
-  );
-};
-
-const upload = multer({
-  storage,
-  fileFilter,
-  limits: {
-    fileSize: parseInt(process.env.MAX_FILE_SIZE, 10) || 10 * 1024 * 1024,
-  },
-});
-
-const uploadSingle = (fieldName) => upload.single(fieldName);
-
-const uploadLabReport = upload.single('labReport');
-const uploadDocument = upload.single('document');
-const uploadMultiple = upload.array('documents', 5);
-
-const handleUploadError = (err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({
-        success: false,
-        message: 'File size exceeds 10MB limit',
-      });
-    }
-
-    if (err.code === 'LIMIT_FILE_COUNT') {
-      return res.status(400).json({
-        success: false,
-        message: 'Too many files. Maximum 5 allowed',
-      });
-    }
-
-    return res.status(400).json({
-      success: false,
-      message: `Upload error: ${err.message}`,
-    });
-  }
-
-  if (err) {
-    return res.status(400).json({
-      success: false,
-      message: err.message,
-    });
-  }
-
-  next();
-};
-
-upload.uploadSingle = uploadSingle;
-upload.uploadDocument = uploadDocument;
-upload.uploadLabReport = uploadLabReport;
-upload.uploadMultiple = uploadMultiple;
-upload.handleUploadError = handleUploadError;
-
-module.exports = upload;
+// Make sure handleUploadError is present (it is, from multer, but be explicit)
+module.exports.handleUploadError = multer.handleUploadError;

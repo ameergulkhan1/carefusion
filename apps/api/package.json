@@ -2,17 +2,13 @@
   "name": "clinixsol-backend",
   "version": "1.0.0",
   "description": "ClinixSol Healthcare Platform Backend API",
-  "main": "src/app.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest --coverage"
   },
-  "keywords": [
-    "healthcare",
-    "telemedicine",
-    "API"
-  ],
+  "keywords": ["healthcare", "telemedicine", "API"],
   "author": "ClinixSol Team",
   "license": "MIT",
   "dependencies": {

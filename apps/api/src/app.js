@@ -8,6 +8,25 @@ const { morganMiddleware, logger } = require('./middleware/logger');
 
 const app = express();
 
+// ===== TEMPORARY DIAGNOSTIC — REMOVE AFTER DEBUGGING =====
+app.use((req, res, next) => {
+  console.log('[DIAG] Incoming request:', JSON.stringify({
+    method: req.method,
+    url: req.url,
+    originalUrl: req.originalUrl,
+    baseUrl: req.baseUrl,
+    path: req.path,
+    host: req.headers.host,
+    xForwardedHost: req.headers['x-forwarded-host'],
+    xForwardedUri: req.headers['x-forwarded-uri'],
+    isVercel: !!process.env.VERCEL,
+    vercelEnv: process.env.VERCEL_ENV,
+    cwd: process.cwd(),
+  }));
+  next();
+});
+// ===== END DIAGNOSTIC =====
+
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
   contentSecurityPolicy: {
@@ -24,7 +43,6 @@ app.use(morganMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Legacy local-uploads: dev only, opt-in
 if (process.env.NODE_ENV !== 'production' && process.env.SERVE_LOCAL_UPLOADS === 'true') {
   const path = require('path');
   app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -43,6 +61,13 @@ app.use('/api/laboratory', require('./routes/laboratory.routes'));
 app.use('/api/pharmacy', require('./routes/pharmacy.routes'));
 app.use('/api/symptoms', require('./routes/symptom.routes'));
 app.use('/api/clinical-notes', require('./routes/clinicalNotes.routes'));
+
+// ===== TEMPORARY DIAGNOSTIC — REMOVE AFTER DEBUGGING =====
+app.all('*', (req, res, next) => {
+  console.log('[DIAG] Catch-all fired:', req.method, req.originalUrl);
+  next();
+});
+// ===== END DIAGNOSTIC =====
 
 app.use((req, res) => {
   logger.warn(`⚠️ 404 Not Found: ${req.method} ${req.originalUrl}`);

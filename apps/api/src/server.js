@@ -1,5 +1,16 @@
 ﻿require('dotenv').config();
 
+// ===== TEMPORARY DIAGNOSTIC — REMOVE AFTER DEBUGGING =====
+console.log('[DIAG] server.js loaded', JSON.stringify({
+  isMain: require.main === module,
+  nodeVersion: process.version,
+  vercel: !!process.env.VERCEL,
+  vercelEnv: process.env.VERCEL_ENV,
+  vercelRegion: process.env.VERCEL_REGION,
+  cwd: process.cwd(),
+}));
+// ===== END DIAGNOSTIC =====
+
 const { createServer } = require('http');
 const app = require('./app');
 const connectDB = require('./config/database');
@@ -36,7 +47,6 @@ async function start() {
   }
 }
 
-// Only start when run directly — not when Vercel requires this file
 if (require.main === module) start();
 
 const shutdown = (signal) => {
@@ -48,5 +58,5 @@ process.on('SIGINT', () => shutdown('SIGINT'));
 process.on('unhandledRejection', (err) => { logger.error('Unhandled Rejection:', err); httpServer.close(() => process.exit(1)); });
 process.on('uncaughtException', (err) => { logger.error('Uncaught Exception:', err); process.exit(1); });
 
-// ✅ Single-line change: export the Express app (Vercel detects this)
+// Export the app for Vercel's zero-config detection
 module.exports = app;

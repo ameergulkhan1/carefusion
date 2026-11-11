@@ -48,4 +48,5 @@ process.on('SIGINT', () => shutdown('SIGINT'));
 process.on('unhandledRejection', (err) => { logger.error('Unhandled Rejection:', err); httpServer.close(() => process.exit(1)); });
 process.on('uncaughtException', (err) => { logger.error('Uncaught Exception:', err); process.exit(1); });
 
-module.exports = { app, io, httpServer };
+// ✅ Single-line change: export the Express app (Vercel detects this)
+module.exports = app;

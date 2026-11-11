@@ -1,54 +1,100 @@
+
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
 
-// Ensure upload directory exists
-const uploadDir = process.env.UPLOAD_PATH || './uploads';
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
+// Store uploaded files in memory.
+// This avoids writing files to Vercel's serverless filesystem.
+const storage = multer.memoryStorage();
 
-// Storage configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let subDir = 'general';
-    
-    if (file.fieldname === 'prescription') subDir = 'prescriptions';
-    else if (file.fieldname === 'labReport') subDir = 'lab-reports';
-    else if (file.fieldname === 'medicalRecord') subDir = 'medical-records';
-    else if (file.fieldname === 'profilePicture') subDir = 'profiles';
-    
-    const fullPath = path.join(uploadDir, subDir);
-    if (!fs.existsSync(fullPath)) {
-      fs.mkdirSync(fullPath, { recursive: true });
-    }
-    
-    cb(null, fullPath);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// Allowed file types
+const allowedTypes = [
+  'image/jpeg',
+  'image/png',
+  'image/jpg',
+  'application/pdf',
+];
 
 // File filter
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
-  
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type. Only JPEG, PNG, and PDF are allowed.'), false);
+    cb(
+      new Error('Invalid file type. Only JPEG, PNG, and PDF are allowed.'),
+      false
+    );
   }
 };
 
+// Maximum file size: 10 MB by default
+const maxFileSize = Number.parseInt(
+  process.env.MAX_FILE_SIZE,
+  10
+) || 10 * 1024 * 1024;
+
 // Multer configuration
 const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
+  storage,
+  fileFilter,
   limits: {
-    fileSize: parseInt(process.env.MAX_FILE_SIZE) || 10485760 // 10MB
-  }
+    fileSize: maxFileSize,
+    files: 5,
+  },
 });
+
+// Upload helpers
+const uploadSingle = (fieldName) => upload.single(fieldName);
+
+const uploadLabReport = upload.single('labReport');
+
+const uploadDocument = upload.single('document');
+
+const uploadMedicalRecord = upload.single('medicalRecord');
+
+const uploadPrescription = upload.single('prescription');
+
+const uploadProfilePicture = upload.single('profilePicture');
+
+const uploadMultiple = upload.array('documents', 5);
+
+// Multer error handler
+const handleUploadError = (error, req, res, next) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({
+        success: false,
+        message: `File size exceeds the maximum allowed limit of ${
+          maxFileSize / (1024 * 1024)
+        } MB.`,
+      });
+    }
+
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+      code: error.code,
+    });
+  }
+
+  if (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message || 'File upload failed.',
+    });
+  }
+
+  next();
+};
+
+// Export helpers while preserving existing upload.single(), upload.array()
+// and other Multer methods.
+upload.uploadSingle = uploadSingle;
+upload.uploadLabReport = uploadLabReport;
+upload.uploadDocument = uploadDocument;
+upload.uploadMedicalRecord = uploadMedicalRecord;
+upload.uploadPrescription = uploadPrescription;
+upload.uploadProfilePicture = uploadProfilePicture;
+upload.uploadMultiple = uploadMultiple;
+upload.handleUploadError = handleUploadError;
 
 module.exports = upload;

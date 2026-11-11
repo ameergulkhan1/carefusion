@@ -328,25 +328,25 @@ exports.publishTestResult = async (req, res) => {
     let reportDocument = result?.reportDocument; 
 
     if (req.file) {
-      // Normalize path for Windows/Linux URLs
-      const normalizedPath = req.file.path.replace(/\\/g, '/');
-      const relativePath = normalizedPath.includes('/uploads/') 
-        ? normalizedPath.substring(normalizedPath.indexOf('/uploads/')) 
-        : `/uploads/lab-reports/${req.file.filename}`;
-      
-      reportDocument = {
-        url: relativePath,
-        filename: req.file.originalname,
-        size: req.file.size,
-        mimeType: req.file.mimetype
-      };
-    } else {
-      // No file uploaded - return clear error
-      return res.status(400).json({ 
-        success: false, 
-        message: 'No report file received. Please select a file to upload.' 
-      });
-    }
+  const fileData = await fileService.uploadToCloud(req.file, {
+    directory: 'lab-reports',
+    resourceType: 'auto',
+  });
+
+  reportDocument = {
+    url: fileData.url,
+    filename: fileData.filename,
+    publicId: fileData.publicId,
+    size: fileData.size,
+    mimeType: fileData.mimeType,
+  };
+} else {
+  return res.status(400).json({
+    success: false,
+    message: 'No report file received. Please select a file to upload.',
+  });
+
+    } 
     // 6. Prepare Payload
     const resultPayload = {
       order: order._id,

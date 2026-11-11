@@ -1,9 +1,13 @@
+
 const mongoose = require('mongoose');
 
+// ---------------------------------------------
+// Doctor License Number Index Compatibility
+// ---------------------------------------------
 const ensureDoctorLicenseIndex = async () => {
   const doctorsCollection = mongoose.connection.collection('doctors');
 
-  // Remove legacy null/empty values so sparse+partial unique index is safe.
+  // Remove legacy null/empty values.
   await doctorsCollection.updateMany(
     {
       $or: [
@@ -15,7 +19,9 @@ const ensureDoctorLicenseIndex = async () => {
   );
 
   const indexes = await doctorsCollection.indexes();
-  const licenseIndex = indexes.find((idx) => idx.name === 'licenseNumber_1');
+  const licenseIndex = indexes.find(
+    (idx) => idx.name === 'licenseNumber_1'
+  );
 
   const hasCompatibleIndex =
     licenseIndex &&
@@ -38,13 +44,19 @@ const ensureDoctorLicenseIndex = async () => {
   }
 };
 
+// ---------------------------------------------
+// Lab User ID Index Compatibility
+// ---------------------------------------------
 const ensureLabUserIndexCompatibility = async () => {
   const labsCollection = mongoose.connection.collection('labs');
 
-  // Backfill legacy `userId` from `user` for existing documents.
+  // Backfill legacy userId from user.
   const labsMissingUserId = await labsCollection
     .find({
-      $or: [{ userId: { $exists: false } }, { userId: null }],
+      $or: [
+        { userId: { $exists: false } },
+        { userId: null }
+      ],
       user: { $exists: true, $ne: null }
     })
     .project({ _id: 1, user: 1 })
@@ -55,14 +67,19 @@ const ensureLabUserIndexCompatibility = async () => {
       labsMissingUserId.map((doc) => ({
         updateOne: {
           filter: { _id: doc._id },
-          update: { $set: { userId: doc.user } }
+          update: {
+            $set: { userId: doc.user }
+          }
         }
       }))
     );
   }
 
   const indexes = await labsCollection.indexes();
-  const userIdIndex = indexes.find((idx) => idx.name === 'userId_1');
+  const userIdIndex = indexes.find(
+    (idx) => idx.name === 'userId_1'
+  );
+
   const hasCompatibleUserIdIndex =
     userIdIndex &&
     userIdIndex.unique === true &&
@@ -84,10 +101,13 @@ const ensureLabUserIndexCompatibility = async () => {
   }
 };
 
+// ---------------------------------------------
+// Lab License Number Index Compatibility
+// ---------------------------------------------
 const ensureLabLicenseIndexCompatibility = async () => {
   const labsCollection = mongoose.connection.collection('labs');
 
-  // Remove legacy null/empty values so sparse unique index remains safe.
+  // Remove legacy null/empty values.
   await labsCollection.updateMany(
     {
       $or: [
@@ -99,7 +119,10 @@ const ensureLabLicenseIndexCompatibility = async () => {
   );
 
   const indexes = await labsCollection.indexes();
-  const licenseIndex = indexes.find((idx) => idx.name === 'licenseNumber_1');
+  const licenseIndex = indexes.find(
+    (idx) => idx.name === 'licenseNumber_1'
+  );
+
   const hasCompatibleLicenseIndex =
     licenseIndex &&
     licenseIndex.unique === true &&
@@ -121,37 +144,55 @@ const ensureLabLicenseIndexCompatibility = async () => {
   }
 };
 
+// ---------------------------------------------
+// MongoDB Connection
+// ---------------------------------------------
 const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+  const mongoUri = process.env.MONGODB_URI;
 
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+  // Validate environment variable before connecting.
+  if (!mongoUri || typeof mongoUri !== 'string') {
+    throw new Error(
+      'MONGODB_URI environment variable is missing or invalid.'
+    );
+  }
+
+  try {
+    const conn = await mongoose.connect(mongoUri);
+
+    console.log(
+      `✅ MongoDB Connected: ${conn.connection.host}`
+    );
+
+    // Verify and maintain database index compatibility.
     await ensureDoctorLicenseIndex();
     console.log('✅ Doctor licenseNumber index verified');
+
     await ensureLabUserIndexCompatibility();
     console.log('✅ Lab userId index compatibility verified');
+
     await ensureLabLicenseIndexCompatibility();
-    console.log('✅ Lab licenseNumber index compatibility verified');
-    
-    // Handle connection events
+    console.log('✅ Lab licenseNumber index verified');
+
+    // Connection event handlers.
     mongoose.connection.on('error', (err) => {
-      console.error(`❌ MongoDB connection error: ${err}`);
+      console.error('❌ MongoDB connection error:', err.message);
     });
 
     mongoose.connection.on('disconnected', () => {
-      console.log('⚠️ MongoDB disconnected');
+      console.warn('⚠️ MongoDB disconnected');
     });
 
-    // Graceful shutdown
-    process.on('SIGINT', async () => {
-      await mongoose.connection.close();
-      console.log('MongoDB connection closed through app termination');
-      process.exit(0);
-    });
+    return conn;
 
   } catch (error) {
-    console.error(`❌ Error connecting to MongoDB: ${error.message}`);
-    process.exit(1);
+    console.error(
+      '❌ MongoDB connection or initialization failed:',
+      error.message
+    );
+
+    // Let the application entry point handle the error.
+    throw error;
   }
 };
 

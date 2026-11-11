@@ -1,0 +1,857 @@
+{
+  "categories": [
+    {
+      "name": "General",
+      "symptoms": [
+        {
+          "id": "shivering",
+          "label": "Shivering",
+          "description": "Patient experiencing shivering",
+          "severity": 5
+        },
+        {
+          "id": "chills",
+          "label": "Chills",
+          "description": "Patient experiencing chills",
+          "severity": 3
+        },
+        {
+          "id": "fatigue",
+          "label": "Fatigue",
+          "description": "Patient experiencing fatigue",
+          "severity": 4
+        },
+        {
+          "id": "weight_gain",
+          "label": "Weight Gain",
+          "description": "Patient experiencing weight gain",
+          "severity": 3
+        },
+        {
+          "id": "weight_loss",
+          "label": "Weight Loss",
+          "description": "Patient experiencing weight loss",
+          "severity": 3
+        },
+        {
+          "id": "lethargy",
+          "label": "Lethargy",
+          "description": "Patient experiencing lethargy",
+          "severity": 2
+        },
+        {
+          "id": "high_fever",
+          "label": "High Fever",
+          "description": "Patient experiencing high fever",
+          "severity": 7
+        },
+        {
+          "id": "sweating",
+          "label": "Sweating",
+          "description": "Patient experiencing sweating",
+          "severity": 3
+        },
+        {
+          "id": "dehydration",
+          "label": "Dehydration",
+          "description": "Patient experiencing dehydration",
+          "severity": 4
+        },
+        {
+          "id": "malaise",
+          "label": "Malaise",
+          "description": "Patient experiencing malaise",
+          "severity": 6
+        }
+      ]
+    },
+    {
+      "name": "Respiratory",
+      "symptoms": [
+        {
+          "id": "continuous_sneezing",
+          "label": "Continuous Sneezing",
+          "description": "Patient experiencing continuous sneezing",
+          "severity": 4
+        },
+        {
+          "id": "cough",
+          "label": "Cough",
+          "description": "Patient experiencing cough",
+          "severity": 4
+        },
+        {
+          "id": "breathlessness",
+          "label": "Breathlessness",
+          "description": "Patient experiencing breathlessness",
+          "severity": 4
+        },
+        {
+          "id": "phlegm",
+          "label": "Phlegm",
+          "description": "Patient experiencing phlegm",
+          "severity": 5
+        },
+        {
+          "id": "throat_irritation",
+          "label": "Throat Irritation",
+          "description": "Patient experiencing throat irritation",
+          "severity": 4
+        },
+        {
+          "id": "runny_nose",
+          "label": "Runny Nose",
+          "description": "Patient experiencing runny nose",
+          "severity": 5
+        },
+        {
+          "id": "congestion",
+          "label": "Congestion",
+          "description": "Patient experiencing congestion",
+          "severity": 5
+        },
+        {
+          "id": "chest_pain",
+          "label": "Chest Pain",
+          "description": "Patient experiencing chest pain",
+          "severity": 7
+        },
+        {
+          "id": "mucoid_sputum",
+          "label": "Mucoid Sputum",
+          "description": "Patient experiencing mucoid sputum",
+          "severity": 4
+        },
+        {
+          "id": "rusty_sputum",
+          "label": "Rusty Sputum",
+          "description": "Patient experiencing rusty sputum",
+          "severity": 4
+        },
+        {
+          "id": "blood_in_sputum",
+          "label": "Blood In Sputum",
+          "description": "Patient experiencing blood in sputum",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "name": "Digestive",
+      "symptoms": [
+        {
+          "id": "stomach_pain",
+          "label": "Stomach Pain",
+          "description": "Patient experiencing stomach pain",
+          "severity": 5
+        },
+        {
+          "id": "acidity",
+          "label": "Acidity",
+          "description": "Patient experiencing acidity",
+          "severity": 3
+        },
+        {
+          "id": "vomiting",
+          "label": "Vomiting",
+          "description": "Patient experiencing vomiting",
+          "severity": 5
+        },
+        {
+          "id": "indigestion",
+          "label": "Indigestion",
+          "description": "Patient experiencing indigestion",
+          "severity": 5
+        },
+        {
+          "id": "nausea",
+          "label": "Nausea",
+          "description": "Patient experiencing nausea",
+          "severity": 5
+        },
+        {
+          "id": "loss_of_appetite",
+          "label": "Loss Of Appetite",
+          "description": "Patient experiencing loss of appetite",
+          "severity": 4
+        },
+        {
+          "id": "constipation",
+          "label": "Constipation",
+          "description": "Patient experiencing constipation",
+          "severity": 4
+        },
+        {
+          "id": "abdominal_pain",
+          "label": "Abdominal Pain",
+          "description": "Patient experiencing abdominal pain",
+          "severity": 4
+        },
+        {
+          "id": "diarrhoea",
+          "label": "Diarrhoea",
+          "description": "Patient experiencing diarrhoea",
+          "severity": 6
+        },
+        {
+          "id": "belly_pain",
+          "label": "Belly Pain",
+          "description": "Patient experiencing belly pain",
+          "severity": 4
+        },
+        {
+          "id": "stomach_bleeding",
+          "label": "Stomach Bleeding",
+          "description": "Patient experiencing stomach bleeding",
+          "severity": 6
+        },
+        {
+          "id": "distention_of_abdomen",
+          "label": "Distention Of Abdomen",
+          "description": "Patient experiencing distention of abdomen",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "name": "Neurological",
+      "symptoms": [
+        {
+          "id": "headache",
+          "label": "Headache",
+          "description": "Patient experiencing headache",
+          "severity": 3
+        },
+        {
+          "id": "dizziness",
+          "label": "Dizziness",
+          "description": "Patient experiencing dizziness",
+          "severity": 4
+        },
+        {
+          "id": "slurred_speech",
+          "label": "Slurred Speech",
+          "description": "Patient experiencing slurred speech",
+          "severity": 4
+        },
+        {
+          "id": "spinning_movements",
+          "label": "Spinning Movements",
+          "description": "Patient experiencing spinning movements",
+          "severity": 6
+        },
+        {
+          "id": "loss_of_balance",
+          "label": "Loss Of Balance",
+          "description": "Patient experiencing loss of balance",
+          "severity": 4
+        },
+        {
+          "id": "unsteadiness",
+          "label": "Unsteadiness",
+          "description": "Patient experiencing unsteadiness",
+          "severity": 4
+        },
+        {
+          "id": "weakness_of_one_body_side",
+          "label": "Weakness Of One Body Side",
+          "description": "Patient experiencing weakness of one body side",
+          "severity": 4
+        },
+        {
+          "id": "loss_of_smell",
+          "label": "Loss Of Smell",
+          "description": "Patient experiencing loss of smell",
+          "severity": 3
+        },
+        {
+          "id": "altered_sensorium",
+          "label": "Altered Sensorium",
+          "description": "Patient experiencing altered sensorium",
+          "severity": 2
+        },
+        {
+          "id": "lack_of_concentration",
+          "label": "Lack Of Concentration",
+          "description": "Patient experiencing lack of concentration",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "name": "Skin",
+      "symptoms": [
+        {
+          "id": "itching",
+          "label": "Itching",
+          "description": "Patient experiencing itching",
+          "severity": 1
+        },
+        {
+          "id": "skin_rash",
+          "label": "Skin Rash",
+          "description": "Patient experiencing skin rash",
+          "severity": 3
+        },
+        {
+          "id": "nodal_skin_eruptions",
+          "label": "Nodal Skin Eruptions",
+          "description": "Patient experiencing nodal skin eruptions",
+          "severity": 4
+        },
+        {
+          "id": "patches_in_throat",
+          "label": "Patches In Throat",
+          "description": "Patient experiencing patches in throat",
+          "severity": 6
+        },
+        {
+          "id": "yellowish_skin",
+          "label": "Yellowish Skin",
+          "description": "Patient experiencing yellowish skin",
+          "severity": 3
+        },
+        {
+          "id": "dischromic _patches",
+          "label": "Dischromic Patches",
+          "description": "Patient experiencing dischromic patches",
+          "severity": 3
+        },
+        {
+          "id": "pus_filled_pimples",
+          "label": "Pus Filled Pimples",
+          "description": "Patient experiencing pus filled pimples",
+          "severity": 2
+        },
+        {
+          "id": "blackheads",
+          "label": "Blackheads",
+          "description": "Patient experiencing blackheads",
+          "severity": 2
+        },
+        {
+          "id": "scurring",
+          "label": "Scurring",
+          "description": "Patient experiencing scurring",
+          "severity": 2
+        },
+        {
+          "id": "skin_peeling",
+          "label": "Skin Peeling",
+          "description": "Patient experiencing skin peeling",
+          "severity": 3
+        },
+        {
+          "id": "blister",
+          "label": "Blister",
+          "description": "Patient experiencing blister",
+          "severity": 4
+        },
+        {
+          "id": "red_sore_around_nose",
+          "label": "Red Sore Around Nose",
+          "description": "Patient experiencing red sore around nose",
+          "severity": 2
+        },
+        {
+          "id": "yellow_crust_ooze",
+          "label": "Yellow Crust Ooze",
+          "description": "Patient experiencing yellow crust ooze",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "name": "Musculoskeletal",
+      "symptoms": [
+        {
+          "id": "joint_pain",
+          "label": "Joint Pain",
+          "description": "Patient experiencing joint pain",
+          "severity": 3
+        },
+        {
+          "id": "muscle_wasting",
+          "label": "Muscle Wasting",
+          "description": "Patient experiencing muscle wasting",
+          "severity": 3
+        },
+        {
+          "id": "back_pain",
+          "label": "Back Pain",
+          "description": "Patient experiencing back pain",
+          "severity": 3
+        },
+        {
+          "id": "neck_pain",
+          "label": "Neck Pain",
+          "description": "Patient experiencing neck pain",
+          "severity": 5
+        },
+        {
+          "id": "knee_pain",
+          "label": "Knee Pain",
+          "description": "Patient experiencing knee pain",
+          "severity": 3
+        },
+        {
+          "id": "hip_joint_pain",
+          "label": "Hip Joint Pain",
+          "description": "Patient experiencing hip joint pain",
+          "severity": 2
+        },
+        {
+          "id": "muscle_weakness",
+          "label": "Muscle Weakness",
+          "description": "Patient experiencing muscle weakness",
+          "severity": 2
+        },
+        {
+          "id": "stiff_neck",
+          "label": "Stiff Neck",
+          "description": "Patient experiencing stiff neck",
+          "severity": 4
+        },
+        {
+          "id": "swelling_joints",
+          "label": "Swelling Joints",
+          "description": "Patient experiencing swelling joints",
+          "severity": 5
+        },
+        {
+          "id": "movement_stiffness",
+          "label": "Movement Stiffness",
+          "description": "Patient experiencing movement stiffness",
+          "severity": 5
+        },
+        {
+          "id": "muscle_pain",
+          "label": "Muscle Pain",
+          "description": "Patient experiencing muscle pain",
+          "severity": 2
+        },
+        {
+          "id": "painful_walking",
+          "label": "Painful Walking",
+          "description": "Patient experiencing painful walking",
+          "severity": 2
+        }
+      ]
+    },
+    {
+      "name": "Cardiovascular",
+      "symptoms": [
+        {
+          "id": "fast_heart_rate",
+          "label": "Fast Heart Rate",
+          "description": "Patient experiencing fast heart rate",
+          "severity": 5
+        },
+        {
+          "id": "prominent_veins_on_calf",
+          "label": "Prominent Veins On Calf",
+          "description": "Patient experiencing prominent veins on calf",
+          "severity": 6
+        },
+        {
+          "id": "palpitations",
+          "label": "Palpitations",
+          "description": "Patient experiencing palpitations",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "name": "Urinary",
+      "symptoms": [
+        {
+          "id": "burning_micturition",
+          "label": "Burning Micturition",
+          "description": "Patient experiencing burning micturition",
+          "severity": 6
+        },
+        {
+          "id": "spotting_ urination",
+          "label": "Spotting Urination",
+          "description": "Patient experiencing spotting urination",
+          "severity": 3
+        },
+        {
+          "id": "bladder_discomfort",
+          "label": "Bladder Discomfort",
+          "description": "Patient experiencing bladder discomfort",
+          "severity": 4
+        },
+        {
+          "id": "foul_smell_of urine",
+          "label": "Foul Smell Of Urine",
+          "description": "Patient experiencing foul smell of urine",
+          "severity": 3
+        },
+        {
+          "id": "continuous_feel_of_urine",
+          "label": "Continuous Feel Of Urine",
+          "description": "Patient experiencing continuous feel of urine",
+          "severity": 6
+        },
+        {
+          "id": "passage_of_gases",
+          "label": "Passage Of Gases",
+          "description": "Patient experiencing passage of gases",
+          "severity": 5
+        },
+        {
+          "id": "internal_itching",
+          "label": "Internal Itching",
+          "description": "Patient experiencing internal itching",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "name": "Eyes",
+      "symptoms": [
+        {
+          "id": "sunken_eyes",
+          "label": "Sunken Eyes",
+          "description": "Patient experiencing sunken eyes",
+          "severity": 3
+        },
+        {
+          "id": "yellowing_of_eyes",
+          "label": "Yellowing Of Eyes",
+          "description": "Patient experiencing yellowing of eyes",
+          "severity": 4
+        },
+        {
+          "id": "blurred_and_distorted_vision",
+          "label": "Blurred And Distorted Vision",
+          "description": "Patient experiencing blurred and distorted vision",
+          "severity": 5
+        },
+        {
+          "id": "redness_of_eyes",
+          "label": "Redness Of Eyes",
+          "description": "Patient experiencing redness of eyes",
+          "severity": 5
+        },
+        {
+          "id": "watering_from_eyes",
+          "label": "Watering From Eyes",
+          "description": "Patient experiencing watering from eyes",
+          "severity": 4
+        },
+        {
+          "id": "visual_disturbances",
+          "label": "Visual Disturbances",
+          "description": "Patient experiencing visual disturbances",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "name": "Mental Health",
+      "symptoms": [
+        {
+          "id": "anxiety",
+          "label": "Anxiety",
+          "description": "Patient experiencing anxiety",
+          "severity": 4
+        },
+        {
+          "id": "mood_swings",
+          "label": "Mood Swings",
+          "description": "Patient experiencing mood swings",
+          "severity": 3
+        },
+        {
+          "id": "restlessness",
+          "label": "Restlessness",
+          "description": "Patient experiencing restlessness",
+          "severity": 5
+        },
+        {
+          "id": "depression",
+          "label": "Depression",
+          "description": "Patient experiencing depression",
+          "severity": 3
+        },
+        {
+          "id": "irritability",
+          "label": "Irritability",
+          "description": "Patient experiencing irritability",
+          "severity": 2
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "symptoms": [
+        {
+          "id": "ulcers_on_tongue",
+          "label": "Ulcers On Tongue",
+          "description": "Patient experiencing ulcers on tongue",
+          "severity": 4
+        },
+        {
+          "id": "cold_hands_and_feets",
+          "label": "Cold Hands And Feets",
+          "description": "Patient experiencing cold hands and feets",
+          "severity": 5
+        },
+        {
+          "id": "irregular_sugar_level",
+          "label": "Irregular Sugar Level",
+          "description": "Patient experiencing irregular sugar level",
+          "severity": 5
+        },
+        {
+          "id": "dark_urine",
+          "label": "Dark Urine",
+          "description": "Patient experiencing dark urine",
+          "severity": 4
+        },
+        {
+          "id": "pain_behind_the_eyes",
+          "label": "Pain Behind The Eyes",
+          "description": "Patient experiencing pain behind the eyes",
+          "severity": 4
+        },
+        {
+          "id": "mild_fever",
+          "label": "Mild Fever",
+          "description": "Patient experiencing mild fever",
+          "severity": 5
+        },
+        {
+          "id": "yellow_urine",
+          "label": "Yellow Urine",
+          "description": "Patient experiencing yellow urine",
+          "severity": 4
+        },
+        {
+          "id": "acute_liver_failure",
+          "label": "Acute Liver Failure",
+          "description": "Patient experiencing acute liver failure",
+          "severity": 6
+        },
+        {
+          "id": "fluid_overload",
+          "label": "Fluid Overload",
+          "description": "Patient experiencing fluid overload",
+          "severity": 4
+        },
+        {
+          "id": "swelling_of_stomach",
+          "label": "Swelling Of Stomach",
+          "description": "Patient experiencing swelling of stomach",
+          "severity": 7
+        },
+        {
+          "id": "swelled_lymph_nodes",
+          "label": "Swelled Lymph Nodes",
+          "description": "Patient experiencing swelled lymph nodes",
+          "severity": 6
+        },
+        {
+          "id": "sinus_pressure",
+          "label": "Sinus Pressure",
+          "description": "Patient experiencing sinus pressure",
+          "severity": 4
+        },
+        {
+          "id": "weakness_in_limbs",
+          "label": "Weakness In Limbs",
+          "description": "Patient experiencing weakness in limbs",
+          "severity": 7
+        },
+        {
+          "id": "pain_during_bowel_movements",
+          "label": "Pain During Bowel Movements",
+          "description": "Patient experiencing pain during bowel movements",
+          "severity": 5
+        },
+        {
+          "id": "pain_in_anal_region",
+          "label": "Pain In Anal Region",
+          "description": "Patient experiencing pain in anal region",
+          "severity": 6
+        },
+        {
+          "id": "bloody_stool",
+          "label": "Bloody Stool",
+          "description": "Patient experiencing bloody stool",
+          "severity": 5
+        },
+        {
+          "id": "irritation_in_anus",
+          "label": "Irritation In Anus",
+          "description": "Patient experiencing irritation in anus",
+          "severity": 6
+        },
+        {
+          "id": "cramps",
+          "label": "Cramps",
+          "description": "Patient experiencing cramps",
+          "severity": 4
+        },
+        {
+          "id": "bruising",
+          "label": "Bruising",
+          "description": "Patient experiencing bruising",
+          "severity": 4
+        },
+        {
+          "id": "obesity",
+          "label": "Obesity",
+          "description": "Patient experiencing obesity",
+          "severity": 4
+        },
+        {
+          "id": "swollen_legs",
+          "label": "Swollen Legs",
+          "description": "Patient experiencing swollen legs",
+          "severity": 5
+        },
+        {
+          "id": "swollen_blood_vessels",
+          "label": "Swollen Blood Vessels",
+          "description": "Patient experiencing swollen blood vessels",
+          "severity": 5
+        },
+        {
+          "id": "puffy_face_and_eyes",
+          "label": "Puffy Face And Eyes",
+          "description": "Patient experiencing puffy face and eyes",
+          "severity": 5
+        },
+        {
+          "id": "enlarged_thyroid",
+          "label": "Enlarged Thyroid",
+          "description": "Patient experiencing enlarged thyroid",
+          "severity": 6
+        },
+        {
+          "id": "brittle_nails",
+          "label": "Brittle Nails",
+          "description": "Patient experiencing brittle nails",
+          "severity": 5
+        },
+        {
+          "id": "swollen_extremeties",
+          "label": "Swollen Extremeties",
+          "description": "Patient experiencing swollen extremeties",
+          "severity": 5
+        },
+        {
+          "id": "excessive_hunger",
+          "label": "Excessive Hunger",
+          "description": "Patient experiencing excessive hunger",
+          "severity": 4
+        },
+        {
+          "id": "extra_marital_contacts",
+          "label": "Extra Marital Contacts",
+          "description": "Patient experiencing extra marital contacts",
+          "severity": 5
+        },
+        {
+          "id": "drying_and_tingling_lips",
+          "label": "Drying And Tingling Lips",
+          "description": "Patient experiencing drying and tingling lips",
+          "severity": 4
+        },
+        {
+          "id": "toxic_look_(typhos)",
+          "label": "Toxic Look (Typhos)",
+          "description": "Patient experiencing toxic look (typhos)",
+          "severity": 5
+        },
+        {
+          "id": "red_spots_over_body",
+          "label": "Red Spots Over Body",
+          "description": "Patient experiencing red spots over body",
+          "severity": 3
+        },
+        {
+          "id": "abnormal_menstruation",
+          "label": "Abnormal Menstruation",
+          "description": "Patient experiencing abnormal menstruation",
+          "severity": 6
+        },
+        {
+          "id": "increased_appetite",
+          "label": "Increased Appetite",
+          "description": "Patient experiencing increased appetite",
+          "severity": 5
+        },
+        {
+          "id": "polyuria",
+          "label": "Polyuria",
+          "description": "Patient experiencing polyuria",
+          "severity": 4
+        },
+        {
+          "id": "family_history",
+          "label": "Family History",
+          "description": "Patient experiencing family history",
+          "severity": 5
+        },
+        {
+          "id": "receiving_blood_transfusion",
+          "label": "Receiving Blood Transfusion",
+          "description": "Patient experiencing receiving blood transfusion",
+          "severity": 5
+        },
+        {
+          "id": "receiving_unsterile_injections",
+          "label": "Receiving Unsterile Injections",
+          "description": "Patient experiencing receiving unsterile injections",
+          "severity": 2
+        },
+        {
+          "id": "coma",
+          "label": "Coma",
+          "description": "Patient experiencing coma",
+          "severity": 7
+        },
+        {
+          "id": "history_of_alcohol_consumption",
+          "label": "History Of Alcohol Consumption",
+          "description": "Patient experiencing history of alcohol consumption",
+          "severity": 5
+        },
+        {
+          "id": "fluid_overload.1",
+          "label": "Fluid Overload.1",
+          "description": "Patient experiencing fluid overload.1",
+          "severity": 3
+        },
+        {
+          "id": "silver_like_dusting",
+          "label": "Silver Like Dusting",
+          "description": "Patient experiencing silver like dusting",
+          "severity": 2
+        },
+        {
+          "id": "small_dents_in_nails",
+          "label": "Small Dents In Nails",
+          "description": "Patient experiencing small dents in nails",
+          "severity": 2
+        },
+        {
+          "id": "inflammatory_nails",
+          "label": "Inflammatory Nails",
+          "description": "Patient experiencing inflammatory nails",
+          "severity": 2
+        },
+        {
+          "id": "Unnamed: 133",
+          "label": "Unnamed: 133",
+          "description": "Patient experiencing Unnamed: 133",
+          "severity": 3
+        }
+      ]
+    }
+  ]
+}

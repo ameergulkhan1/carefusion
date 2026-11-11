@@ -58,12 +58,6 @@ dmypy.json
 *.ipynb_checkpoints
 
 # ============================================
-DATA / MODELS (uncomment if not committing)
-============================================
-data/
-*.csv
-*.pkl
-*.joblib
 *.h5
 *.onnx
 *.pt

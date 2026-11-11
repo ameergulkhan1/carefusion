@@ -1,4 +1,5 @@
 ﻿const app = require('../src/app');
+module.exports = require('../src/app');
 const connectDB = require('../src/config/database');
 
 let connected = false;

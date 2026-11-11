@@ -2,7 +2,7 @@
   "name": "clinixsol-backend",
   "version": "1.0.0",
   "description": "ClinixSol Healthcare Platform Backend API",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",

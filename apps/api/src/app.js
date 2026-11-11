@@ -8,25 +8,6 @@ const { morganMiddleware, logger } = require('./middleware/logger');
 
 const app = express();
 
-// ===== TEMPORARY DIAGNOSTIC — REMOVE AFTER DEBUGGING =====
-app.use((req, res, next) => {
-  console.log('[DIAG] Incoming request:', JSON.stringify({
-    method: req.method,
-    url: req.url,
-    originalUrl: req.originalUrl,
-    baseUrl: req.baseUrl,
-    path: req.path,
-    host: req.headers.host,
-    xForwardedHost: req.headers['x-forwarded-host'],
-    xForwardedUri: req.headers['x-forwarded-uri'],
-    isVercel: !!process.env.VERCEL,
-    vercelEnv: process.env.VERCEL_ENV,
-    cwd: process.cwd(),
-  }));
-  next();
-});
-// ===== END DIAGNOSTIC =====
-
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
   contentSecurityPolicy: {
@@ -37,7 +18,26 @@ app.use(helmet({
     },
   },
 }));
-app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', credentials: true }));
+
+// ===== CORS — allow local dev + deployed frontend =====
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  process.env.FRONTEND_URL,
+  'https://carefusion-puce.vercel.app/',   // ← replace with your real frontend URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);              // curl / mobile
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    if (/^https:\/\/carefusion[\w-]*\.vercel\.app$/.test(origin)) return callback(null, true);
+    return callback(new Error(`Origin ${origin} not allowed by CORS`));
+  },
+  credentials: true,
+}));
+// ===== END CORS =====
+
 app.use(compression());
 app.use(morganMiddleware);
 app.use(express.json());
@@ -50,6 +50,15 @@ if (process.env.NODE_ENV !== 'production' && process.env.SERVE_LOCAL_UPLOADS ===
 
 app.use('/api/', apiLimiter);
 
+app.get('/', (req, res) => {
+  res.json({
+    service: 'clinixsol-api',
+    status: 'running',
+    health: '/health',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get('/health', (req, res) => res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() }));
 
 app.use('/api/auth', require('./routes/auth'));
@@ -61,13 +70,6 @@ app.use('/api/laboratory', require('./routes/laboratory.routes'));
 app.use('/api/pharmacy', require('./routes/pharmacy.routes'));
 app.use('/api/symptoms', require('./routes/symptom.routes'));
 app.use('/api/clinical-notes', require('./routes/clinicalNotes.routes'));
-
-// ===== TEMPORARY DIAGNOSTIC — REMOVE AFTER DEBUGGING =====
-app.all('*', (req, res, next) => {
-  console.log('[DIAG] Catch-all fired:', req.method, req.originalUrl);
-  next();
-});
-// ===== END DIAGNOSTIC =====
 
 app.use((req, res) => {
   logger.warn(`⚠️ 404 Not Found: ${req.method} ${req.originalUrl}`);

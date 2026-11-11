@@ -7,18 +7,12 @@ const FALLBACK_STATUS_CODES = new Set([404, 501, 502, 503, 504]);
 
 const toErrorData = (error, fallbackMessage) => {
   const data = error?.response?.data;
-  if (data && typeof data === 'object') {
-    return data;
-  }
-
+  if (data && typeof data === 'object') return data;
   return { message: data?.message || error?.message || fallbackMessage };
 };
 
 const isFallbackError = (error) => {
-  if (!error?.response) {
-    return true;
-  }
-
+  if (!error?.response) return true;
   return FALLBACK_STATUS_CODES.has(error.response.status);
 };
 
@@ -43,7 +37,6 @@ const runWithFallback = async (apiCall, mockCall, errorMessage) => {
 };
 
 export const laboratoryService = {
-  // Get labs with locations and collection support
   getAvailableLabs: async (params = {}) => {
     return runWithFallback(
       () => api.get(`${API_URL}/labs`, { params }),
@@ -52,7 +45,6 @@ export const laboratoryService = {
     );
   },
 
-  // Get all available lab tests
   getAllTests: async (params = {}) => {
     return runWithFallback(
       () => api.get(`${API_URL}/tests`, { params }),
@@ -61,7 +53,6 @@ export const laboratoryService = {
     );
   },
 
-  // Get test categories
   getTestCategories: async () => {
     return runWithFallback(
       () => api.get(`${API_URL}/tests/categories`),
@@ -70,7 +61,6 @@ export const laboratoryService = {
     );
   },
 
-  // Get single test by ID
   getTestById: async (testId) => {
     return runWithFallback(
       () => api.get(`${API_URL}/tests/${testId}`),
@@ -79,7 +69,6 @@ export const laboratoryService = {
     );
   },
 
-  // Create new lab order
   createOrder: async (orderData) => {
     return runWithFallback(
       () => api.post(`${API_URL}/orders`, orderData),
@@ -88,7 +77,6 @@ export const laboratoryService = {
     );
   },
 
-  // Get patient's lab orders
   getPatientOrders: async (params = {}) => {
     return runWithFallback(
       () => api.get(`${API_URL}/orders`, { params }),
@@ -97,7 +85,6 @@ export const laboratoryService = {
     );
   },
 
-  // Lab operations - get orders for authenticated lab user
   getLabOrders: async (params = {}) => {
     return runWithFallback(
       () => api.get(`${API_URL}/lab/orders`, { params }),
@@ -114,15 +101,24 @@ export const laboratoryService = {
     );
   },
 
+  // ✅ FIXED: Let Axios set the Content-Type automatically
   publishResult: async (orderId, testId, payload) => {
+    const formData = new FormData();
+    formData.append('overallResult', payload.overallResult);
+    formData.append('remarks', payload.remarks || '');
+    formData.append('markReported', payload.markReported);
+    
+    if (payload.file) {
+      formData.append('labReport', payload.file);
+    }
+
     return runWithFallback(
-      () => api.post(`${API_URL}/lab/orders/${orderId}/tests/${testId}/result`, payload),
+      () => api.post(`${API_URL}/lab/orders/${orderId}/tests/${testId}/result`, formData),
       () => laboratoryMockService.publishResult(orderId, testId, payload),
       'Failed to publish laboratory result'
     );
   },
 
-  // Get order by ID
   getOrderById: async (orderId) => {
     return runWithFallback(
       () => api.get(`${API_URL}/orders/${orderId}`),
@@ -131,7 +127,6 @@ export const laboratoryService = {
     );
   },
 
-  // Cancel order
   cancelOrder: async (orderId, cancelReason) => {
     return runWithFallback(
       () => api.put(`${API_URL}/orders/${orderId}/cancel`, { cancelReason }),
@@ -140,7 +135,6 @@ export const laboratoryService = {
     );
   },
 
-  // Get patient's lab results
   getPatientResults: async () => {
     return runWithFallback(
       () => api.get(`${API_URL}/results`),
@@ -149,7 +143,6 @@ export const laboratoryService = {
     );
   },
 
-  // Get result by ID
   getResultById: async (resultId) => {
     return runWithFallback(
       () => api.get(`${API_URL}/results/${resultId}`),
@@ -158,7 +151,6 @@ export const laboratoryService = {
     );
   },
 
-  // Download lab report
   downloadReport: async (resultId) => {
     return runWithFallback(
       () => api.get(`${API_URL}/results/${resultId}/download`),

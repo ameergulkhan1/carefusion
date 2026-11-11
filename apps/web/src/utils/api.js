@@ -4,9 +4,9 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  // ✅ FIX: We removed the global 'Content-Type': 'application/json'.
+  // Axios will now automatically set the correct Content-Type
+  // (application/json for normal data, multipart/form-data for FormData)
 });
 
 api.interceptors.request.use(
@@ -47,7 +47,7 @@ api.interceptors.response.use(
 
         if (response.data?.data?.tokens) {
           const { accessToken, refreshToken: newRefreshToken } = response.data.data.tokens;
-          
+
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', newRefreshToken);
 
@@ -62,8 +62,7 @@ api.interceptors.response.use(
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         sessionStorage.clear();
-        
-        // Only redirect if not already on login page
+
         if (!window.location.pathname.includes('/login')) {
           window.location.href = '/login';
         }

@@ -30,6 +30,8 @@ import PatientDashboard from './modules/02-patient-profile/pages/PatientDashboar
 import MedicalRecords from './modules/02-patient-profile/pages/MedicalRecords/MedicalRecords';
 import MedicalHistory from './modules/02-patient-profile/pages/MedicalHistory/MedicalHistory';
 import DoctorPatientsList from './modules/02-patient-profile/pages/DoctorPatientsList/DoctorPatientsList';
+// ✅ NEW: Patient Lab Reports page
+import LabReports from './modules/02-patient-profile/components/LabReports.jsx';
 
 // Module 3: Symptom Screening
 import SymptomChecker from './modules/03-symptom-screening/pages/SymptomChecker/SymptomChecker';
@@ -151,6 +153,9 @@ function App() {
                 <Route path="/medical-history" element={<MedicalHistory />} />
                 <Route path="/patient/profile" element={<PatientProfile />} />
                 <Route path="/patient/medical-records" element={<MedicalRecords />} />
+
+                {/* ✅ NEW: Patient Lab Reports page */}
+                <Route path="/patient/lab-reports" element={<LabReports />} />
 
                 {/* Symptom Screening Routes */}
                 <Route path="/symptoms/checker" element={<SymptomChecker />} />

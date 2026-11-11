@@ -143,14 +143,17 @@ const LabOrders = () => {
                           Start
                         </button>
                       )}
+                      
+                      {/* ✅ FIXED: Navigates to the Order Details page where you can select which test to publish */}
                       {order.orderStatus === 'in-progress' && (
                         <button
                           className="btn-action primary"
-                          onClick={() => navigate(`/laboratory/orders/${order._id}/result`)}
+                          onClick={() => navigate(`/laboratory/orders/${order._id}`)}
                         >
                           Publish Result
                         </button>
                       )}
+                      
                       <button
                         className="btn-action"
                         onClick={() => navigate(`/laboratory/orders/${order._id}`)}

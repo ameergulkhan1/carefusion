@@ -173,6 +173,9 @@ const LabOrderDetails = () => {
                 const testName = test.testName || test.testId?.testName || 'Unknown Test';
                 const testCode = test.testCode || test.testId?.testCode || 'N/A';
                 const testStatus = test.status || 'pending';
+                
+                // Get report URL if it exists
+                const reportUrl = test.result?.reportDocument?.url;
 
                 return (
                   <tr key={testId}>
@@ -185,18 +188,29 @@ const LabOrderDetails = () => {
                       </span>
                     </td>
                     <td>
-                      {testStatus === 'completed' ? (
-                        <span className="text-success">✓ Published</span>
-                      ) : (
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        {/* Always allow publishing/updating the result */}
                         <button
                           className="btn-publish"
                           onClick={() =>
                             navigate(`/laboratory/results?orderId=${order._id}&testId=${testId}`)
                           }
                         >
-                          Publish Result
+                          {testStatus === 'completed' ? 'Update Result' : 'Publish Result'}
                         </button>
-                      )}
+                        
+                        {/* Show view link if report URL exists */}
+                        {reportUrl && (
+                          <a 
+                            href={reportUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style={{ fontSize: '0.85rem', color: '#2563eb', textDecoration: 'underline' }}
+                          >
+                            View Report
+                          </a>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );

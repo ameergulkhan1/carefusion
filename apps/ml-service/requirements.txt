@@ -30,6 +30,9 @@ marshmallow==3.20.1
 # Rate Limiting
 flask-limiter==3.3.1
 
+# JSON
+ujson==5.8.0
+
 # HTTP Requests (for service-to-service communication)
 requests>=2.31.0
 

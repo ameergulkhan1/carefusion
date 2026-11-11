@@ -11,10 +11,10 @@ class NotificationService {
       if (this.io) {
         this.io.to(`user:${userId}`).emit('notification', notification);
       }
-      
+
       // TODO: Save notification to database
       // await Notification.create({ userId, ...notification });
-      
+
       return { success: true };
     } catch (error) {
       console.error('Send notification error:', error);
@@ -70,12 +70,18 @@ class NotificationService {
     return await this.sendToUser(userId, notification);
   }
 
-  // Lab result notification
+  // Lab result notification — now includes test name + result status
+  // labResult: { resultId, orderId, testName, overallResult, reportedAt }
   async notifyLabResult(userId, labResult) {
+    const testName = labResult?.testName || 'Lab Test';
+    const status = labResult?.overallResult
+      ? ` (${labResult.overallResult})`
+      : '';
+
     const notification = {
       type: 'lab-result',
       title: 'Lab Results Ready',
-      message: 'Your lab test results are now available',
+      message: `Your result for ${testName}${status} is now available`,
       data: labResult,
       timestamp: new Date()
     };

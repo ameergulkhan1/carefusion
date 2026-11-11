@@ -24,7 +24,7 @@ const PatientDashboard = () => {
       try {
         if (!isMounted) return;
         setLoading(true);
-        
+
         // Fetch all data in parallel to reduce total loading time
         const [statsResponse, appointmentsResponse, prescriptionsResponse, labTestsResponse, labOrdersResponse] = await Promise.allSettled([
           patientService.getStats(),
@@ -46,8 +46,8 @@ const PatientDashboard = () => {
 
         // Handle appointments
         if (appointmentsResponse.status === 'fulfilled' && appointmentsResponse.value?.success) {
-          const appointments = Array.isArray(appointmentsResponse.value.data) 
-            ? appointmentsResponse.value.data 
+          const appointments = Array.isArray(appointmentsResponse.value.data)
+            ? appointmentsResponse.value.data
             : appointmentsResponse.value.data?.appointments || [];
           setUpcomingAppointments(appointments.slice(0, 3));
         }
@@ -73,18 +73,21 @@ const PatientDashboard = () => {
           const orders = Array.isArray(labOrdersResponse.value.data)
             ? labOrdersResponse.value.data
             : labOrdersResponse.value.data?.orders || [];
-          setPendingLabTests(orders.filter(order => order.orderStatus === 'scheduled' || order.orderStatus === 'in-progress').slice(0, 3));
+          setPendingLabTests(
+            orders
+              .filter(order => order.orderStatus === 'scheduled' || order.orderStatus === 'in-progress')
+              .slice(0, 3)
+          );
         }
 
       } catch (error) {
         if (!isMounted) return;
         console.error('Dashboard fetch error:', error);
-        
-        // Don't show error toast for rate limiting - it's already handled
+
         if (error.name === 'AbortError') {
           return;
         }
-        
+
         if (error.response?.status === 429) {
           toast.error('Too many requests. Please wait a moment and refresh the page.');
         } else if (error.response?.status === 401) {
@@ -147,6 +150,15 @@ const PatientDashboard = () => {
       path: '/prescriptions'
     }
   ];
+
+  const getResultBadgeClass = (result) => {
+    switch (result) {
+      case 'normal': return 'mini-badge normal';
+      case 'abnormal': return 'mini-badge abnormal';
+      case 'critical': return 'mini-badge critical';
+      default: return 'mini-badge default';
+    }
+  };
 
   if (loading) {
     return (
@@ -216,6 +228,86 @@ const PatientDashboard = () => {
           ))}
         </div>
       </div>
+
+      {/* Lab Reports Section */}
+      <div className="lab-reports-section">
+        <div className="section-header">
+          <h2 className="section-title">Recent Lab Reports</h2>
+          <Link to="/patient/lab-reports" className="view-all-link">
+            View All →
+          </Link>
+        </div>
+
+        {labReports.length === 0 ? (
+          <div className="no-reports-card">
+            <p>No lab reports available yet.</p>
+            <Link to="/laboratory/book-test" className="btn-action">
+              Book a Lab Test
+            </Link>
+          </div>
+        ) : (
+          <div className="reports-grid">
+            {labReports.map((report) => (
+              <div key={report._id} className="report-mini-card">
+                <div className="report-mini-header">
+                  <h3>{report.testName || report.test?.testName || 'Lab Test'}</h3>
+                  <span className={getResultBadgeClass(report.overallResult)}>
+                    {report.overallResult?.toUpperCase() || 'PENDING'}
+                  </span>
+                </div>
+                <p className="report-mini-code">
+                  {report.testCode || report.test?.testCode || '—'}
+                </p>
+                <p className="report-mini-date">
+                  {report.reportedAt
+                    ? new Date(report.reportedAt).toLocaleDateString()
+                    : '—'}
+                </p>
+                <div className="report-mini-actions">
+                  <Link to="/patient/lab-reports" className="btn-view-detail">
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Pending Lab Tests Section */}
+      {pendingLabTests.length > 0 && (
+        <div className="pending-lab-section">
+          <div className="section-header">
+            <h2 className="section-title">Pending Lab Tests</h2>
+            <Link to="/patient/lab-reports" className="view-all-link">
+              View All →
+            </Link>
+          </div>
+          <div className="pending-list">
+            {pendingLabTests.map((order) => (
+              <div key={order._id} className="pending-card">
+                <div>
+                  <p className="pending-order">Order #{order.orderNumber}</p>
+                  <p className="pending-status">
+                    Status: {order.orderStatus?.replace('-', ' ') || 'scheduled'}
+                  </p>
+                  <p className="pending-date">
+                    Appt: {order.appointmentDate
+                      ? new Date(order.appointmentDate).toLocaleDateString()
+                      : '—'}
+                  </p>
+                </div>
+                <Link
+                  to={`/laboratory/orders/${order._id}`}
+                  className="btn-track"
+                >
+                  Track
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

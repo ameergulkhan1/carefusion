@@ -317,44 +317,6 @@ def get_all_symptoms():
             'error': str(e)
         }), 500
 
-
-@app.route('/symptoms/available', methods=['GET'])
-def get_available_symptoms():
-    """Compatibility alias used by the frontend symptom checker."""
-    try:
-        categories_file = os.path.join(DATA_DIR, 'categorized_symptoms.json')
-
-        if not os.path.exists(categories_file):
-            return jsonify({
-                'success': False,
-                'error': 'Categorized symptoms file not found'
-            }), 404
-
-        with open(categories_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-
-        categories = data.get('categories', []) if isinstance(data, dict) else []
-        flat_symptoms = []
-        for category in categories:
-            flat_symptoms.extend(category.get('symptoms', []))
-
-        return jsonify({
-            'success': True,
-            'data': {
-                'categories': categories,
-                'symptoms': flat_symptoms,
-                'count': len(flat_symptoms)
-            },
-            'count': len(flat_symptoms)
-        })
-
-    except Exception as e:
-        logger.error(f"Error getting available symptoms: {str(e)}")
-        return jsonify({
-            'success': False,
-            'error': str(e)
-        }), 500
-
 @app.route('/symptoms/categorized', methods=['GET'])
 def get_categorized_symptoms():
     """Get symptoms organized by category"""

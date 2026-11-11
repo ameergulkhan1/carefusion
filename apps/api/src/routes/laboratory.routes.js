@@ -3,6 +3,7 @@ const router = express.Router();
 const laboratoryController = require('../controllers/laboratory.controller');
 const { protect } = require('../middleware/auth');
 const { hasRole } = require('../middleware/roleCheck');
+const upload = require('../middleware/upload.middleware');
 
 // Test management routes
 router.get('/tests', protect, laboratoryController.getAllTests);
@@ -22,7 +23,23 @@ router.put('/orders/:id/cancel', protect, laboratoryController.cancelOrder);
 // Laboratory (lab role) operational routes
 router.get('/lab/orders', protect, hasRole('lab', 'laboratory', 'admin'), laboratoryController.getLabOrders);
 router.patch('/lab/orders/:id/status', protect, hasRole('lab', 'laboratory', 'admin'), laboratoryController.updateOrderStatus);
-router.post('/lab/orders/:orderId/tests/:testId/result', protect, hasRole('lab', 'laboratory', 'admin'), laboratoryController.publishTestResult);
+
+// ✅ UPDATED: Added Multer error handler for the upload
+router.post(
+  '/lab/orders/:orderId/tests/:testId/result', 
+  protect, 
+  hasRole('lab', 'laboratory', 'admin'), 
+  upload.single('labReport'), 
+  (err, req, res, next) => {
+    if (err instanceof require('multer').MulterError) {
+      return res.status(400).json({ success: false, message: err.message });
+    } else if (err) {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+    next();
+  },
+  laboratoryController.publishTestResult
+);
 
 // Lab Catalog Management routes (lab staff only)
 router.get('/catalog', protect, hasRole('lab', 'laboratory'), laboratoryController.getLabCatalog);

@@ -13,7 +13,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      imgSrc: ["'self'", 'data:', 'blob:', 'http://localhost:3000', 'http://localhost:5000', 'https://res.cloudinary.com'],
+      imgSrc: ["'self'", 'data:', 'blob:', 'http://localhost:3000', 'http://localhost:5000', 'https://res.cloudinary.com' ,'https://carefusion-puce.vercel.app'],
       mediaSrc: ["'self'", 'blob:'],
     },
   },
@@ -24,7 +24,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   process.env.FRONTEND_URL,
-  'https://carefusion-puce.vercel.app/',   // ← replace with your real frontend URL
+  'https://carefusion-puce.vercel.app',   // ← replace with your real frontend URL
 ].filter(Boolean);
 
 app.use(cors({

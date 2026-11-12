@@ -5,6 +5,7 @@ const compression = require('compression');
 const { errorHandler } = require('./middleware/errorHandler');
 const { apiLimiter } = require('./middleware/rateLimiter');
 const { morganMiddleware, logger } = require('./middleware/logger');
+const connectDB = require('./config/database');
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      imgSrc: ["'self'", 'data:', 'blob:', 'http://localhost:3000', 'http://localhost:5000', 'https://res.cloudinary.com' ,'https://carefusion-puce.vercel.app'],
+      imgSrc: ["'self'", 'data:', 'blob:', 'http://localhost:3000', 'http://localhost:5000', 'https://res.cloudinary.com', 'https://carefusion-puce.vercel.app'],
       mediaSrc: ["'self'", 'blob:'],
     },
   },
@@ -24,12 +25,12 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
   process.env.FRONTEND_URL,
-  'https://carefusion-puce.vercel.app',   // ← replace with your real frontend URL
+  'https://carefusion-puce.vercel.app',
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin) return callback(null, true);              // curl / mobile
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
     if (/^https:\/\/carefusion[\w-]*\.vercel\.app$/.test(origin)) return callback(null, true);
     return callback(new Error(`Origin ${origin} not allowed by CORS`));
@@ -49,6 +50,18 @@ if (process.env.NODE_ENV !== 'production' && process.env.SERVE_LOCAL_UPLOADS ===
 }
 
 app.use('/api/', apiLimiter);
+
+// ===== DB connection middleware — MUST run before routes that touch the DB =====
+app.use('/api/', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('[DB] connectDB failed:', err.message);
+    res.status(503).json({ success: false, message: 'Database unavailable' });
+  }
+});
+// ===== END DB middleware =====
 
 app.get('/', (req, res) => {
   res.json({

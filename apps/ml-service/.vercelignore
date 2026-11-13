@@ -1,0 +1,13 @@
+# Ignore everything by default
+*
+
+# Allow the main service files
+!main.py
+!app.py
+!requirements.txt
+!api/
+!src/
+
+# Allow the data folder from the root
+!data/
+!data/**

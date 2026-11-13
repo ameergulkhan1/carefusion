@@ -183,7 +183,8 @@ const Register = () => {
       <div className="auth-modal register-modal">
         <div className="auth-modal-header">
           <h2>Create Your Account</h2>
-          <p>Join thousands using ClinixSol for better healthcare</p>
+          {/* UPDATED: Changed ClinixSol to CareFusion */}
+          <p>Join thousands using CareFusion for better healthcare</p>
         </div>
 
         <button className="google-signin-btn" onClick={handleGoogleSignUp}>
@@ -379,7 +380,8 @@ const Register = () => {
         </div>
 
         <div className="auth-meta">
-          <p>Protected by reCAPTCHA and subject to the ClinixSol <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms of Service</Link>.</p>
+          {/* UPDATED: Changed ClinixSol to CareFusion */}
+          <p>Protected by reCAPTCHA and subject to the CareFusion <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms of Service</Link>.</p>
         </div>
       </div>
     </div>

@@ -241,7 +241,8 @@ const Login = () => {
         </div>
 
         <div className="auth-meta">
-          <p>Protected by reCAPTCHA and subject to the ClinixSol <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms of Service</Link>.</p>
+          {/* UPDATED: Changed ClinixSol to CareFusion */}
+          <p>Protected by reCAPTCHA and subject to the CareFusion <Link to="/privacy">Privacy Policy</Link> and <Link to="/terms">Terms of Service</Link>.</p>
         </div>
       </div>
     </div>

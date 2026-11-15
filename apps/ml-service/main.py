@@ -16,6 +16,7 @@ import logging
 
 # Initialize Flask app
 app = Flask(__name__)
+# Allow all origins for the frontend to access the ML service
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Configure logging
@@ -28,34 +29,13 @@ logger = logging.getLogger(__name__)
 # ==========================================
 # SUPABASE CONFIGURATION (FILES ARE FLAT)
 # ==========================================
-# ⚠️ CHANGE THIS: Replace YOUR_PROJECT_ID with your actual Supabase project ID
 SUPABASE_URL = "https://pmadwxcdutkjomeokzol.supabase.co/storage/v1/object/public/ml-data"
-# Model URLs (You will upload these .pkl files after training)
+
 MODEL_URL = f"{SUPABASE_URL}/disease_model.pkl"
 ENCODER_URL = f"{SUPABASE_URL}/label_encoder.pkl"
 MAPPING_URL = f"{SUPABASE_URL}/symptom_mapping.json"
 INFO_URL = f"{SUPABASE_URL}/disease_info.json"
 CATEGORIES_URL = f"{SUPABASE_URL}/categorized_symptoms.json"
-
-# Import and register clinical notes blueprint
-try:
-    from app.api.clinical_notes import clinical_notes_bp
-    app.register_blueprint(clinical_notes_bp)
-    logging.info("✅ Clinical Notes API registered successfully")
-except Exception:
-    try:
-        from api.clinical_notes import clinical_notes_bp
-        app.register_blueprint(clinical_notes_bp)
-        logging.info("✅ Clinical Notes API registered successfully (script mode)")
-    except Exception as e:
-        logging.warning(f"⚠️ Could not register Clinical Notes API: {str(e)}")
-
-try:
-    from app.services.nlp_service import NLPService
-except Exception:
-    from services.nlp_service import NLPService
-
-nlp_service_fallback = NLPService()
 
 # Global variables for model and data
 model = None
@@ -109,29 +89,25 @@ def load_model_files():
 # Load models immediately when the app starts
 load_model_files()
 
-def create_symptom_vector(symptoms):
-    """Create binary symptom vector from symptom IDs"""
-    n_symptoms = len(symptom_mapping)
-    vector = np.zeros(n_symptoms)
-    
-    # Map symptom IDs to indices
-    symptom_id_to_index = {data['id']: int(idx) for idx, data in symptom_mapping.items()}
-    
-    for symptom in symptoms:
-        if symptom in symptom_id_to_index:
-            vector[symptom_id_to_index[symptom]] = 1
-            
-    return vector.reshape(1, -1)
+# ==========================================
+# ROUTES
+# ==========================================
 
-def calculate_confidence_score(probabilities):
-    """Calculate confidence score from prediction probabilities"""
-    max_prob = np.max(probabilities)
-    if max_prob >= 0.70:
-        return 'high'
-    elif max_prob >= 0.40:
-        return 'medium'
-    else:
-        return 'low'
+@app.route('/', methods=['GET'])
+def root():
+    """Root endpoint to verify the service is running"""
+    return jsonify({
+        'service': 'ClinixSol ML Service',
+        'status': 'running',
+        'model_loaded': model is not None,
+        'endpoints': [
+            '/health',
+            '/predict',
+            '/symptoms/all',
+            '/symptoms/search',
+            '/model/info'
+        ]
+    })
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -143,118 +119,6 @@ def health_check():
         'encoder_loaded': label_encoder is not None,
         'timestamp': datetime.now().isoformat()
     })
-
-@app.route('/summarize-report-documents', methods=['POST'])
-def summarize_report_documents_fallback():
-    """Fallback endpoint for AI report summarization"""
-    try:
-        def extract_text_from_pdf(file_storage):
-            try:
-                from PyPDF2 import PdfReader
-            except ImportError:
-                logger.error('PyPDF2 dependency is missing on ML service')
-                return ''
-            try:
-                file_storage.stream.seek(0)
-                pdf_bytes = file_storage.read()
-                reader = PdfReader(io.BytesIO(pdf_bytes))
-                extracted = []
-                for page in reader.pages:
-                    page_text = page.extract_text() or ''
-                    if page_text.strip():
-                        extracted.append(page_text)
-                return '\n'.join(extracted).strip()
-            except Exception:
-                return ''
-
-        def extract_text_from_image(file_storage):
-            try:
-                from PIL import Image
-                import pytesseract
-            except ImportError:
-                logger.warning('Pillow/pytesseract not installed; image OCR unavailable')
-                return ''
-            try:
-                file_storage.stream.seek(0)
-                image_bytes = file_storage.read()
-                image = Image.open(io.BytesIO(image_bytes))
-                text = pytesseract.image_to_string(image)
-                return (text or '').strip()
-            except Exception:
-                return ''
-
-        def extract_text_from_document(file_storage):
-            filename = (getattr(file_storage, 'filename', '') or '').lower()
-            if filename.endswith('.pdf'):
-                return extract_text_from_pdf(file_storage)
-            if filename.endswith(('.jpg', '.jpeg', '.png', '.webp')):
-                return extract_text_from_image(file_storage)
-            return ''
-
-        uploaded_files = request.files.getlist('documents')
-        if not uploaded_files:
-            single_file = request.files.get('document')
-            if single_file:
-                uploaded_files = [single_file]
-
-        if not uploaded_files:
-            return jsonify({'success': False, 'error': 'No report documents uploaded'}), 400
-
-        allowed_extensions = ('.pdf', '.jpg', '.jpeg', '.png', '.webp')
-        invalid_files = [
-            f.filename for f in uploaded_files
-            if not (f.filename or '').lower().endswith(allowed_extensions)
-        ]
-        if invalid_files:
-            return jsonify({
-                'success': False,
-                'error': 'Only PDF or image documents are supported',
-                'invalidFiles': invalid_files
-            }), 400
-
-        document_texts = []
-        processed_files = []
-        used_metadata_fallback = False
-
-        for file in uploaded_files:
-            processed_files.append(file.filename)
-            text = extract_text_from_document(file)
-            if text:
-                document_texts.append(text)
-
-        if not document_texts:
-            used_metadata_fallback = True
-            fallback_text = (
-                f"Uploaded clinical report files: {', '.join([name for name in processed_files if name])}. "
-                "The documents appear to be scanned/image-based with no machine-readable text. "
-                "Generate a concise clinical intake summary with follow-up recommendations "
-                "and mark that OCR/manual review is required."
-            )
-            document_texts = [fallback_text]
-
-        context = {
-            'patientName': request.form.get('patientName', ''),
-            'patientId': request.form.get('patientId', ''),
-            'doctorName': request.form.get('doctorName', ''),
-            'documentType': request.form.get('documentType', ''),
-            'generatedAt': datetime.utcnow().isoformat() + 'Z'
-        }
-
-        summary = nlp_service_fallback.summarize_report_documents(document_texts, context)
-        extraction_mode = 'metadata_fallback' if used_metadata_fallback else 'text_extraction'
-
-        return jsonify({
-            'success': True,
-            'summary': summary,
-            'filesProcessed': processed_files,
-            'documentsCount': len(processed_files),
-            'extractionMode': extraction_mode,
-            'warning': 'OCR/manual review may be required for scanned PDFs.' if extraction_mode == 'metadata_fallback' else None
-        }), 200
-
-    except Exception as e:
-        logger.error(f"Error in fallback summarize endpoint: {str(e)}")
-        return jsonify({'success': False, 'error': 'Failed to summarize uploaded report documents'}), 500
 
 @app.route('/model/info', methods=['GET'])
 def model_info():
@@ -325,9 +189,33 @@ def search_symptoms():
         logger.error(f"Error searching symptoms: {str(e)}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
+def create_symptom_vector(symptoms):
+    """Create binary symptom vector from symptom IDs"""
+    n_symptoms = len(symptom_mapping)
+    vector = np.zeros(n_symptoms)
+    
+    # Map symptom IDs to indices
+    symptom_id_to_index = {data['id']: int(idx) for idx, data in symptom_mapping.items()}
+    
+    for symptom in symptoms:
+        if symptom in symptom_id_to_index:
+            vector[symptom_id_to_index[symptom]] = 1
+            
+    return vector.reshape(1, -1)
+
+def calculate_confidence_score(probabilities):
+    """Calculate confidence score from prediction probabilities"""
+    max_prob = np.max(probabilities)
+    if max_prob >= 0.70:
+        return 'high'
+    elif max_prob >= 0.40:
+        return 'medium'
+    else:
+        return 'low'
+
 @app.route('/predict', methods=['POST'])
 def predict_disease():
-    """Main prediction endpoint with improved accuracy"""
+    """Main prediction endpoint"""
     try:
         if model is None:
             return jsonify({'success': False, 'error': 'Model is still loading or failed to load. Please try again.'}), 503

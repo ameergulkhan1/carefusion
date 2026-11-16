@@ -21,7 +21,6 @@ import logging
 
 # Initialize Flask app
 app = Flask(__name__)
-# Allow all origins for the frontend to access the ML service
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Configure logging
@@ -90,9 +89,6 @@ def load_model_files():
     except Exception as e:
         logger.error(f"❌ Error loading model files from Supabase: {str(e)}")
         return False
-
-# Load models immediately when the app starts
-load_model_files()
 
 # ==========================================
 # ROUTES
@@ -342,23 +338,20 @@ def internal_error(error):
     logger.error(f"Internal error: {str(error)}")
     return jsonify({'success': False, 'error': 'Internal server error'}), 500
 
+# ==========================================
+# STARTUP LOGIC
+# ==========================================
 if __name__ == '__main__':
-    if model is None:
-        print("\n❌ Failed to load model files from Supabase!")
-        print("🔧 Please check your SUPABASE_URL and internet connection.")
-        exit(1)
-    
-    print("\n✅ ML Service ready!")
-    print("=" * 60)
-    
-    # Start Flask server locally
-    app.run(host='0.0.0.0', port=5001, debug=False)
-    if __name__ == '__main__':
-    # Local development only
+    # LOCAL DEVELOPMENT
+    print("Starting local development server...")
+    load_model_files()
     app.run(host='0.0.0.0', port=5001, debug=False)
 else:
-    # Vercel production environment
-    logger.info("🚀 Vercel environment detected. Attempting to load model files...")
+    # VERCEL PRODUCTION
+    # We load the models here. If it fails, the app STILL starts.
+    print("🚀 Vercel environment detected. Loading model files...")
     success = load_model_files()
-    if not success:
-        logger.error("❌ CRITICAL: Failed to load model files from Supabase during startup.")
+    if success:
+        print("✅ Models loaded successfully on Vercel.")
+    else:
+        print("❌ Models failed to load on Vercel. App will start but predictions may fail.")

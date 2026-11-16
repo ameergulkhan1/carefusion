@@ -3,12 +3,17 @@ ML Service - Flask API for Disease Prediction
 Serves trained ML model predictions
 """
 
+import sys
+import os
+
+# Add the parent directory (ml-service) to sys.path so Python can find other modules
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 import json
 import numpy as np
-import os
 import io
 import requests
 from datetime import datetime

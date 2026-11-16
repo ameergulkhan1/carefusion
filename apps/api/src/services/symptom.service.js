@@ -4,7 +4,7 @@ const axios = require('axios');
 // const Patient = require('../models/Patient');
 
 // ML Service URL from environment variables
-const ML_SERVICE_URL = process.env.ML_SERVICE_URL || 'http://127.0.0.1:5001';
+const ML_SERVICE_URL = process.env.ML_SERVICE_URL_V2 || 'http://127.0.0.1:5001';
 
 const FALLBACK_CATEGORIZED_SYMPTOMS = {
   totalSymptoms: 18,

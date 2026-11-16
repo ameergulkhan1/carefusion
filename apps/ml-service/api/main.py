@@ -353,3 +353,12 @@ if __name__ == '__main__':
     
     # Start Flask server locally
     app.run(host='0.0.0.0', port=5001, debug=False)
+    if __name__ == '__main__':
+    # Local development only
+    app.run(host='0.0.0.0', port=5001, debug=False)
+else:
+    # Vercel production environment
+    logger.info("🚀 Vercel environment detected. Attempting to load model files...")
+    success = load_model_files()
+    if not success:
+        logger.error("❌ CRITICAL: Failed to load model files from Supabase during startup.")

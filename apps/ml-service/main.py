@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 # ==========================================
 # SUPABASE CONFIGURATION (FILES ARE FLAT)
 # ==========================================
-SUPABASE_URL = "https://pmadwxcdutkjomeokzol.supabase.co/storage/v1/object/public/ml-data"
+SUPABASE_URL ="https://pmadwxcdutkjomeokzol.supabase.co/storage/v1/object/public/mlservice"
 
 MODEL_URL = f"{SUPABASE_URL}/disease_model.pkl"
 ENCODER_URL = f"{SUPABASE_URL}/label_encoder.pkl"

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "services": {
+    "ml-service": {
+      "root": "apps/ml-service/",
+      "entrypoint": "main:app"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": { "service": "ml-service" }
+    }
+  ]
+}

@@ -65,26 +65,20 @@ const getFallbackCategorizedSymptoms = () => ({
   source: 'backend-fallback'
 });
 
-console.log(`🔧 Symptom Service initialized with ML_SERVICE_URL: ${ML_SERVICE_URL}`);
-
 const getAvailableSymptoms = async () => {
   try {
-    console.log(`📡 Calling ML Service: ${ML_SERVICE_URL}/symptoms/categorized`);
-    
     const response = await axios.get(`${ML_SERVICE_URL}/symptoms/categorized`, {
-      timeout: 5000 // 5 second timeout so it fails fast
+      timeout: 5000
     });
     
     if (response.data && response.data.success && response.data.data) {
-      console.log('✅ Successfully fetched categorized symptoms from ML service');
       return sanitizeCategorizedSymptoms(response.data.data);
     } else {
       throw new Error('Invalid response format from ML service');
     }
     
   } catch (error) {
-    // 🚨 THE FIX: Catch ANY error and return the fallback immediately.
-    console.warn(`⚠️ ML Service failed (${error.message}). Serving fallback symptoms list.`);
+    // Catch ANY error and return the fallback immediately.
     return getFallbackCategorizedSymptoms();
   }
 };
@@ -121,10 +115,6 @@ const sanitizeCategorizedSymptoms = (payload) => {
 
 const analyzeSymptoms = async (patientId, symptomData) => {
   try {
-    console.log('📊 Starting symptom analysis...');
-    console.log('👤 Patient ID:', patientId || 'anonymous');
-    console.log('💉 Symptoms:', symptomData.symptoms);
-    
     if (!symptomData.symptoms || !Array.isArray(symptomData.symptoms)) {
       throw new Error('Symptoms array is required');
     }
@@ -145,21 +135,17 @@ const analyzeSymptoms = async (patientId, symptomData) => {
       temperature: symptomData.temperature || null
     };
     
-    console.log(`📡 Calling ML Service: ${ML_SERVICE_URL}/predict`);
-    
     const mlResponse = await axios.post(
       `${ML_SERVICE_URL}/predict`,
       mlPayload,
-      { timeout: 10000 } // Reduced timeout to prevent Vercel 504 Gateway Timeout
+      { timeout: 10000 }
     );
     
     if (!mlResponse.data || !mlResponse.data.success || !mlResponse.data.data) {
-      console.error('❌ Invalid ML response:', mlResponse.data);
       throw new Error('Invalid prediction response from ML service');
     }
     
     const mlData = mlResponse.data.data;
-    console.log('✅ ML Prediction received:', mlData.predictions?.length, 'predictions');
     
     const predictions = (mlData.predictions || []).map(pred => ({
       disease: pred.disease,
@@ -186,8 +172,6 @@ const analyzeSymptoms = async (patientId, symptomData) => {
     };
     
   } catch (error) {
-    console.error('❌ Error in analyzeSymptoms:', error.message);
-    
     if (error.code === 'ECONNREFUSED' || error.code === 'ECONNABORTED') {
       throw new Error('ML Service is currently unreachable. Please try again later.');
     }
@@ -200,7 +184,6 @@ const getPatientHistory = async (patientId) => {
   try {
     return [];
   } catch (error) {
-    console.error('❌ Error fetching patient history:', error.message);
     throw new Error(`Failed to fetch history: ${error.message}`);
   }
 };
